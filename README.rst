@@ -92,9 +92,10 @@ No setup is required since the solution will be offered as a training course
 Cleanup
 -------
 If you are using this blueprint to create other blueprints you may need to clean up the BIG-IP configuration before requesting the blueprint promotion.
+
 #. Launch the F5 CLI Docker container docker 
     ``run -it -v "$HOME/.f5_cli:/root/.f5_cli" -v "$(pwd):/f5-cli" f5devcentral/f5-cli:latest /bin/bash``
-    
+
 #. Set the BIG-IP password as an environment variable:
     .. NOTE:: the BIG-IP password can be found on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
 
