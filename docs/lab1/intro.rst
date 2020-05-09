@@ -33,10 +33,14 @@ Setup
 
 2. Launch the F5 CLI Docker container docker
 
+  If you do not have an instance of the F5 CLI docker container running then:
+
   .. code-block:: bash
 
     run -it -v "$HOME/.f5_cli:/root/.f5_cli" -v "$(pwd):/f5-cli" f5devcentral/f5-cli:latest /bin/bash
     cd /f5-cli/projects/labs/lab1
+
+  Otherwise, attack to your running instance of the F5 CLI container
 
 3. login to the BIG-IP
 
@@ -64,8 +68,13 @@ a wide variaty of both infrastructure and application testing options.
 
 Test that the deployment was successful
 
+  .. note:: 
+
+    If you are still in the F5 CLI container, you will need to either exit or open a new terminal
+
   .. code-block:: bash
 
+    cd ~/projects/UDF-DevOps-Base/labs/lab1
     inspec exec test/app
 
 Cleanup
