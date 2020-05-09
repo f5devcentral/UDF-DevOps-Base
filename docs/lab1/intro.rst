@@ -42,19 +42,26 @@ Setup
 
   Otherwise, attack to your running instance of the F5 CLI container
 
-3. login to the BIG-IP
+3. Set the BIG-IP password as an environment variable:
+.. NOTE:: the BIG-IP password can be found on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
+
+.. code-block:: bash
+
+  export bigip_pwd=replaceme
+
+4. login to the BIG-IP
 
   .. code-block:: bash
 
     f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
 
-4. Verify the Application Service 3 Extension is installed
+5. Verify the Application Service 3 Extension is installed
 
   .. code-block:: bash
 
     f5 bigip extension as3 verify
 
-5. Issue AS3 Declaration
+6. Issue AS3 Declaration
 
   .. code-block:: bash
 
