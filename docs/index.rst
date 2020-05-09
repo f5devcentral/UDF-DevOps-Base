@@ -142,49 +142,66 @@ If you are using this blueprint to create other blueprints you may
 need to clean up the BIG-IP configuration before requesting the
 blueprint promotion.
 
-#. Launch the F5 CLI Docker container docker
+1. Launch the F5 CLI Docker container docker
+
+.. code-block:: bash
+
+  run -it -v "$HOME/.f5_cli:/root/.f5_cli" -v "$(pwd):/f5-cli" f5devcentral/f5-cli:latest /bin/bash
+
+2. Set the BIG-IP password as an environment variable:
+.. NOTE:: the BIG-IP password can be found on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
+
+.. code-block:: bash
+
+  export bigip_pwd=replaceme
+
+3. Onboard Base BIG-IP1
+
+  3.1. authenticate the F5-CLI against BIG-IP1:
+
   .. code-block:: bash
 
-    run -it -v "$HOME/.f5_cli:/root/.f5_cli" -v "$(pwd):/f5-cli" f5devcentral/f5-cli:latest /bin/bash
+    f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
 
-#. Set the BIG-IP password as an environment variable:
-  .. NOTE:: the BIG-IP password can be found on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
+  3.2. verify Declarative Onboarding is installed and ready:
 
   .. code-block:: bash
 
-    export bigip_pwd=replaceme
+    f5 bigip extension do verify
 
-#. Onboard Base BIG-IP1
-  #. authenticate the F5-CLI against BIG-IP1:
-    .. code-block:: bash
+  3.3. configure DO for BIG-IP1:
 
-      f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
+  .. code-block:: bash
 
-  #. verify Declarative Onboarding is installed and ready:
-    .. code-block:: bash
+    f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/base.do.json
 
-      f5 bigip extension do verify
+4. Onboard Base BIG-IP2
 
-  #. configure DO for BIG-IP1:
-    .. code-block:: bash
+  4.1. authenticate the F5-CLI against BIG-IP1:
 
-      f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/base.do.json
+  .. code-block:: bash
 
-#. Onboard Base BIG-IP2
-  #. authenticate the F5-CLI against BIG-IP1:
-    .. code-block:: bash
+    f5 login --authentication-provider bigip --host 10.1.1.7 --user admin --password $bigip_pwd
 
-      f5 login --authentication-provider bigip --host 10.1.1.7 --user admin --password $bigip_pwd
+  4.2. verify Declarative Onboarding is installed and ready:
 
-  #. verify Declarative Onboarding is installed and ready:
-    .. code-block:: bash
+  .. code-block:: bash
 
-      f5 bigip extension do verify
+    f5 bigip extension do verify
 
-  #. configure DO for BIG-IP2:
-    .. code-block:: bash
+  4.3. configure DO for BIG-IP2:
 
-      f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/base.do.json
+  .. code-block:: bash
+
+    f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/base.do.json
 
 .. _terminal:  https://code.visualstudio.com/docs/editor/integrated-terminal
 .. _UDF documentation: https://help.udf.f5.com/en/
+
+.. toctree::
+  :maxdepth: 1
+  :caption: Contents:
+  :glob:
+
+  index
+  lab*/intro*

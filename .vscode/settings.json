@@ -9,4 +9,5 @@
     "restructuredtext.linter.name": "doc8",
     "restructuredtext.linter.run": "onSave",
     "restructuredtext.preview.scrollEditorWithPreview": false,
+    "restructuredtext.preview.scrollPreviewWithEditor": false,
 }
