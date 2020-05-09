@@ -43,11 +43,12 @@ Setup
   Otherwise, attack to your running instance of the F5 CLI container
 
 3. Set the BIG-IP password as an environment variable:
-.. NOTE:: the BIG-IP password can be found on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
 
-.. code-block:: bash
+  .. NOTE:: the BIG-IP password can be found on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
 
-  export bigip_pwd=replaceme
+  .. code-block:: bash
+
+    export bigip_pwd=replaceme
 
 4. login to the BIG-IP
 
@@ -65,7 +66,7 @@ Setup
 
   .. code-block:: bash
 
-    f5 bigip extension as3 create --declaration http.as3.json
+    f5 bigip extension as3 create --declaration /f5-cli/projects/UDF-DevOps-Base/labs/lab1/http.as3.json
 
 Testing
 -------
@@ -75,7 +76,7 @@ a wide variaty of both infrastructure and application testing options.
 
 Test that the deployment was successful
 
-  .. note:: 
+  .. note::
 
     If you are still in the F5 CLI container, you will need to either exit or open a new terminal
 
@@ -83,6 +84,17 @@ Test that the deployment was successful
 
     cd ~/projects/UDF-DevOps-Base/labs/lab1
     inspec exec test/app
+
+While InSpec has proven that the application is working some of you
+are still itching to check it in the browser... so we have included
+a containered version of Firefox to view applications inside our
+test environment.
+
+1. In the UDF Components list, Click the Access dropdowm on the Client System
+2. Click FIREFOX
+3. In the Firefox browser, enter http://10.1.20.20 in the address bar
+
+You should now see the NGINX demo application.
 
 Cleanup
 -------
