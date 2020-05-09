@@ -17,14 +17,19 @@ Environment
 -----------
 The UDF blueprint consists of the following resources:
 
-- 2 x BIG-IP virtual appliances (15.0.x)
-- 1 Ubuntu 18 application server running:
-    - NGINX
-- 1 Ubuntu 18 client server running:
-    - Coder (Web based VS Code)
-    - Docker
-        - f5-cli container
-    - Sphinx
+* 2 x BIG-IP virtual appliances (15.0.x)
+* 1 Ubuntu 18 application server running:
+
+  * NGINX Web Server (port 80)
+  * NGINX Demo App (port 8080)
+  * OWASP Juice Shop (port 3000)
+
+* 1 Ubuntu 18 client server running:
+
+  * Coder (Web based VS Code)
+  * Docker
+    * f5-cli
+    * firefox
 
 Networking
 ----------
