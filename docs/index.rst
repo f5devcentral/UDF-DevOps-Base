@@ -92,45 +92,49 @@ Setup: F5 Employees
 
     export bigip_pwd=replaceme
 
-6. Onboard BIG-IP1
+6. Onboard BIG-IPs 
 
-  6.1. authenticate the F5-CLI against BIG-IP1:
+.. tabs::
 
-    .. code-block:: bash
+  .. tab:: BIG-IP1
 
-      f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
+    authenticate the F5-CLI against BIG-IP1:
 
-  6.2. verify Declarative Onboarding is installed and ready:
+      .. code-block:: bash
 
-    .. code-block:: bash
+        f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
 
-      f5 bigip extension do verify
+    verify Declarative Onboarding is installed and ready:
 
-  6.3. configure DO for BIG-IP1:
+      .. code-block:: bash
 
-    .. code-block:: bash
+        f5 bigip extension do verify
 
-      f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/bigip1.do.json
+    configure DO for BIG-IP1:
 
-7. Onboard BIG-IP2
+      .. code-block:: bash
 
-  7.1. authenticate the F5-CLI against BIG-IP1:
+        f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/bigip1.do.json
 
-    .. code-block:: bash
+  .. tab:: BIG-IP2
 
-      f5 login --authentication-provider bigip --host 10.1.1.7 --user admin --password $bigip_pwd
+    authenticate the F5-CLI against BIG-IP1:
 
-  7.2. verify Declarative Onboarding is installed and ready:
+      .. code-block:: bash
 
-    .. code-block:: bash
+        f5 login --authentication-provider bigip --host 10.1.1.7 --user admin --password $bigip_pwd
 
-      f5 bigip extension do verify
+    verify Declarative Onboarding is installed and ready:
 
-  7.3. configure DO for BIG-IP2:
+      .. code-block:: bash
 
-    .. code-block:: bash
+        f5 bigip extension do verify
 
-      f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/bigip2.do.json
+    configure DO for BIG-IP2:
+
+      .. code-block:: bash
+
+        f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/bigip2.do.json
 
 Setup: F5 Customers
 -------------------
