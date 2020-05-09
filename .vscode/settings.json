@@ -7,5 +7,6 @@
     "restructuredtext.sphinxBuildPath": "/usr/local/bin/sphinx-build",
     "restructuredtext.linter.executablePath": "/usr/local/bin/doc8",
     "restructuredtext.linter.name": "doc8",
-    "restructuredtext.linter.run": "onType",
+    "restructuredtext.linter.run": "onSave",
+    "restructuredtext.preview.scrollEditorWithPreview": false,
 }
