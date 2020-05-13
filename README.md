@@ -1,6 +1,3 @@
-
-# UDF DevOps Base
-
 ## Overview
 
 This repository provides the base components required to setup a DevOps base lab in UDF.  This lab can be used to practice and created automation and DevOps content. 
