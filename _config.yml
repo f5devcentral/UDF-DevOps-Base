@@ -31,6 +31,11 @@ url: "https://f5solutionsengineering.github.io/" # the base hostname & protocol 
 theme: minima
 plugins:
   - jekyll-feed
+
+titles_from_headings:
+  enabled: true
+  strip_title: true
+  collections: false
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
