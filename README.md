@@ -36,6 +36,7 @@ The UDF blueprint consists of the following resources:
 
 1. Login to the Unified Demo Framework
 2. Deploy the DevOps Base blueprint
+
     > **_NOTE:_** For more information on deploying a UDF blueprint, please reference the [UDF documentation](https://help.udf.f5.com/en/)
 3. Under components, click the access dropdown on the client system, then click VS CODE
 4. Open a new [terminal](https://code.visualstudio.com/docs/editor/integrated-terminal) in VS Code
@@ -44,6 +45,7 @@ The UDF blueprint consists of the following resources:
         run -it -v "$HOME/.f5_cli:/root/.f5_cli" -v "$(pwd):/f5-cli" f5devcentral/f5-cli:latest /bin/bash
 
 6. Set the BIG-IP password as an environment variable:
+
     > **_NOTE:_** the BIG-IP password can be found on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
         
         export bigip_pwd=replaceme
@@ -81,6 +83,7 @@ If you are using this blueprint to create other blueprints you may need to clean
         run -it -v "$HOME/.f5_cli:/root/.f5_cli" -v "$(pwd):/f5-cli" f5devcentral/f5-cli:latest /bin/bash
 
 2. Set the BIG-IP password as an environment variable:
+
     > **_NOTE:_** the BIG-IP password can be found on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
     
         export bigip_pwd=replaceme
