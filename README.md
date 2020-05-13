@@ -1,3 +1,7 @@
+---
+title: UDF DevOps Base
+---
+
 ## Overview
 
 This repository provides the base components required to setup a DevOps base lab in UDF.  This lab can be used to practice and created automation and DevOps content. 
@@ -110,7 +114,7 @@ If you are using this blueprint to create other blueprints you may need to clean
     #. verify Declarative Onboarding is installed and ready:
         
             f5 bigip extension do verify
-            
+
     #. configure DO for BIG-IP2:
 
             f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/base.do.json
