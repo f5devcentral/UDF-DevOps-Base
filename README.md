@@ -102,15 +102,15 @@ If you are using this blueprint to create other blueprints you may need to clean
             
             f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/base.do.json
 
-#. Onboard Base BIG-IP2
-    #. authenticate the F5-CLI against BIG-IP1:
+4. Onboard Base BIG-IP2
+    4.1. authenticate the F5-CLI against BIG-IP1:
         
             f5 login --authentication-provider bigip --host 10.1.1.7 --user admin --password $bigip_pwd
 
-    #. verify Declarative Onboarding is installed and ready:
+    4.2. verify Declarative Onboarding is installed and ready:
         
             f5 bigip extension do verify
 
-    #. configure DO for BIG-IP2:
+    4.3. configure DO for BIG-IP2:
 
             f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/base.do.json
