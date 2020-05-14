@@ -19,6 +19,7 @@
 # in the templates via {{ site.myvariable }}.
 
 title: UDF DevOps Base
+author: F5 Networks Solutions Engineering
 description: >- # this means to ignore newlines until "baseurl:"
   This site provides information about the UDF DevOps Base blueprint and the labs you can run against it.
 baseurl: "/UDF-DevOps-Base" # the subpath of your site, e.g. /blog
