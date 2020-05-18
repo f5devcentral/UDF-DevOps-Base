@@ -53,9 +53,6 @@ leverage the following F5 components:
 5. Issue AS3 Declaration
 
         docker exec -it nifty_nash f5 bigip extension as3 create --declaration /f5-cli/labs/lab1/http.as3.json
-6. Edit the docker container
-
-        exit
 
 ## Testing
 
