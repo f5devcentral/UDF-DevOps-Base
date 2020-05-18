@@ -46,14 +46,14 @@ leverage the following F5 components:
         
         docker exec -it nifty_nash f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
 
-5. Verify the Application Service 3 Extension is installed
+4. Verify the Application Service 3 Extension is installed
 
         docker exec -it nifty_nash f5 bigip extension as3 verify
 
-6. Issue AS3 Declaration
+5. Issue AS3 Declaration
 
         docker exec -it nifty_nash f5 bigip extension as3 create --declaration /f5-cli/labs/lab1/http.as3.json
-7. Edit the docker container
+6. Edit the docker container
 
         exit
 
