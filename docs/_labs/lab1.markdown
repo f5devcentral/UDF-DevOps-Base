@@ -34,32 +34,25 @@ leverage the following F5 components:
         cd ~/projects/UDF-DevOps-Base
         git pull
 
-2. Launch the F5 CLI Docker container docker
-
-     If you do not have an instance of the F5 CLI docker container running then:
-
-        run -it -v "$HOME/.f5_cli:/root/.f5_cli" -v "$(pwd):/f5-cli" f5devcentral/f5-cli:latest /bin/bash
-        cd /f5-cli/projects/labs/lab1
-
-    Otherwise, attack to your running instance of the F5 CLI container
-
-3. Set the BIG-IP password as an environment variable:
+2. Set the BIG-IP password as an environment variable:
 
     > **NOTE**: The BIG-IP password can be found on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
 
         export bigip_pwd=replaceme
 
-4. login to the BIG-IP
+3. login to the BIG-IP (using the F5-CLI container)
 
-        f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
+    > **Note**: If the F5-CLI container is not running, start is with the 'docker start nifty_nash' command 
+        
+        docker exec -it nifty_nash f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
 
-5. Verify the Application Service 3 Extension is installed
+4. Verify the Application Service 3 Extension is installed
 
-        f5 bigip extension as3 verify
+        docker exec -it nifty_nash f5 bigip extension as3 verify
 
-6. Issue AS3 Declaration
+5. Issue AS3 Declaration
 
-        f5 bigip extension as3 create --declaration /f5-cli/projects/UDF-DevOps-Base/labs/lab1/http.as3.json
+        docker exec -it nifty_nash f5 bigip extension as3 create --declaration /f5-cli/labs/lab1/http.as3.json
 
 ## Testing
 
@@ -87,9 +80,9 @@ You should now see the NGINX demo application.
 
 ## Cleanup
 
-To cleanup the lab we need to remove the AS3 declaration deployed to the BIG-IP
+To cleanup the lab we need to remove the AS3 declaration deployed to the BIG-IP.  Run the following command in the f5-cli docker container
 
-    f5 bigip extension as3 delete --auto-approve
+    docker exec -it nifty_nash f5 bigip extension as3 delete --auto-approve
 
 
 [F5 CLI]: https://clouddocs.f5.com/sdk/f5-cli/
