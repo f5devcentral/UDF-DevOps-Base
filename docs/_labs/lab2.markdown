@@ -76,10 +76,10 @@ To make our Jinja2 template a little more useful, we're going to introduce loopi
 1. Create a new yaml data file called lab2b.yml:
 
         virtual_addresses: 
-            - 10.1.20.20
+          - 10.1.20.20
         pool_members:
-            - 10.1.10.4
-            - 10.1.10.5
+          - 10.1.10.4
+          - 10.1.10.5
 
 2. Create the AS3 declaration using Jinja2
 
