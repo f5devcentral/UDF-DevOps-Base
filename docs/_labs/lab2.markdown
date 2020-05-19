@@ -133,17 +133,17 @@ Now we will extend the Jinja2 template to support multiple applications under th
 
 2. login to the BIG-IP (using the F5-CLI container)
 
-    > **Note**: If the F5-CLI container is not running, start is with the 'docker start f5-sdk' command 
+    > **Note**: If the F5-CLI container is not running, start is with the 'docker start f5-cli' command 
         
-        docker exec -it f5-sdk f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
+        docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
 
 3. Verify the Application Service 3 Extension is installed
 
-        docker exec -it f5-sdk f5 bigip extension as3 verify
+        docker exec -it f5-cli f5 bigip extension as3 verify
 
 4. Issue AS3 Declaration
 
-        docker exec -it f5-sdk f5 bigip extension as3 create --declaration /f5-cli/projects/UDF-DevOps-Base/labs/lab2/lab2c.as3.json
+        docker exec -it f5-cli f5 bigip extension as3 create --declaration /f5-cli/projects/UDF-DevOps-Base/labs/lab2/lab2c.as3.json
 
 ## Testing
 
@@ -162,7 +162,7 @@ Test that the deployment was successful:
 
 To cleanup the lab we need to remove the AS3 declaration deployed to the BIG-IP.  Run the following command in the f5-cli docker container
 
-    docker exec -it f5-sdk f5 bigip extension as3 delete --auto-approve
+    docker exec -it f5-cli f5 bigip extension as3 delete --auto-approve
 
 
 [F5 CLI]: https://clouddocs.f5.com/sdk/f5-cli/
