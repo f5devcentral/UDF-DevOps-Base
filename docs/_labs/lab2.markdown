@@ -77,8 +77,8 @@ To make our Jinja2 template a little more useful, we're going to introduce loopi
         virtualAddresses:
           - 10.1.20.20
         serverAddresses:
-          - 10.1.10.4
-          - 10.1.20.5
+          - 10.1.10.5
+          - 10.1.20.10
 
 2. Create the AS3 declaration using Jinja2
 
@@ -122,7 +122,7 @@ Test that the deployment was successful:
 
   > **NOTE**: If you are still in the F5 CLI container, you will need to either exit or open a new terminal
 
-    cd ~/projects/UDF-DevOps-Base/labs/lab1
+    cd ~/projects/UDF-DevOps-Base/labs/lab2
     inspec exec test/app
 
 ## Cleanup
