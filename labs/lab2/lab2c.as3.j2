@@ -5,20 +5,22 @@
     "persist": true,
     "declaration": {
         "class": "ADC",
-        "schemaVersion": "3.0.0",
+        "schemaVersion": "3.13.0",
         "label": "Demo",
-        "id": "lab0",
-        "remark": "Demo Python SDK",
-        "Demo": {
+        "id": "lab2c",
+        "remark": "Demo Jinja2 and F5 CLI",
+        "demo": {
             "class": "Tenant",
-            "A1": {
+            {% for app in apps -%}
+            "{{ app.name }}": {
                 "class": "Application",
                 "template": "http",
                 "serviceMain": {
                     "class": "Service_HTTP",
                     "virtualAddresses": [
-                        "10.1.20.10"
+                        "{{ app.virtualAddresses|join('", "') }}"
                     ],
+                    "virtualPort" : {{ app.virtualPort }},
                     "pool": "web_pool"
                 },
                 "web_pool": {
@@ -27,13 +29,14 @@
                         "http"
                     ],
                     "members": [{
-                        "servicePort": 80,
+                        "servicePort": {{ app.servicePort }},
                         "serverAddresses": [
-                            "10.1.10.4"
+                            "{{ app.serverAddresses|join('", "') }}"
                         ]
                     }]
                 }
-            }
+            }{{ "," if not loop.last }}
+            {% endfor -%}
         }
     }
 }
