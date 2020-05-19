@@ -6,9 +6,9 @@
     "declaration": {
         "class": "ADC",
         "schemaVersion": "3.0.0",
-        "id": "single_http_app",
-        "label": "Sample 1",
-        "remark": "Simple HTTP Service with Round-Robin Load Balancing",
+        "id": "lab1",
+        "label": "Demo",
+        "remark": "Demo F5 SDK",
         "demo": {
             "class": "Tenant",
             "A1": {

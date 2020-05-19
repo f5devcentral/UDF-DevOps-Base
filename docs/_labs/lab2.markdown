@@ -33,6 +33,7 @@ leverage the following F5 components:
 * [F5 Automation Toolchain][F5 Automation Toolchain]
 * [F5 CLI][F5 CLI]
 * [Jinja2 CLI][Jinja2 CLI]
+* [InSpec][InSpec]
 
 ## Setup
 Ensure you havce the latest version of the lab from GitHub then open the lab2 folder
@@ -62,7 +63,7 @@ Ensure you havce the latest version of the lab from GitHub then open the lab2 fo
 
 * identical declaration to the one from lab1 (minus the declaration id)
 
-    diff lab2a.as3.json ../../declarations/ltm.as3.json
+        diff lab2a.as3.json ../lab1/http.as3.json
 
 * static assignment of virtual server and pool members
 
@@ -74,15 +75,15 @@ To make our Jinja2 template a little more useful, we're going to introduce loopi
 
 1. Create a new yaml data file called lab2b.yml:
 
-    virtual_addresses: 
-        - 10.1.20.20
-    pool_members:
-        - 10.1.10.4
-        - 10.1.10.5
+        virtual_addresses: 
+            - 10.1.20.20
+        pool_members:
+            - 10.1.10.4
+            - 10.1.10.5
 
 2. Create the AS3 declaration using Jinja2
 
-    jinja2 lab2b.as3.j2 lab2b.yml > lab2b.as3.json
+        jinja2 lab2b.as3.j2 lab2b.yml > lab2b.as3.json
 
 3. Open the AS3 declaration and examine it:
 
@@ -100,17 +101,17 @@ To make our Jinja2 template a little more useful, we're going to introduce loopi
 
 2. login to the BIG-IP (using the F5-CLI container)
 
-    > **Note**: If the F5-CLI container is not running, start is with the 'docker start nifty_nash' command 
+    > **Note**: If the F5-CLI container is not running, start is with the 'docker start f5-sdk' command 
         
-        docker exec -it nifty_nash f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
+        docker exec -it f5-sdk f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
 
 3. Verify the Application Service 3 Extension is installed
 
-        docker exec -it nifty_nash f5 bigip extension as3 verify
+        docker exec -it f5-sdk f5 bigip extension as3 verify
 
 4. Issue AS3 Declaration
 
-        docker exec -it nifty_nash f5 bigip extension as3 create --declaration /f5-cli/labs/lab2/lab2a.json
+        docker exec -it f5-sdk f5 bigip extension as3 create --declaration /f5-cli/labs/lab2/lab2b.json
 
 ## Testing
 
@@ -129,7 +130,7 @@ Test that the deployment was successful:
 
 To cleanup the lab we need to remove the AS3 declaration deployed to the BIG-IP.  Run the following command in the f5-cli docker container
 
-    docker exec -it nifty_nash f5 bigip extension as3 delete --auto-approve
+    docker exec -it f5-sdk f5 bigip extension as3 delete --auto-approve
 
 
 [F5 CLI]: https://clouddocs.f5.com/sdk/f5-cli/
