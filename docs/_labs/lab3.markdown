@@ -57,7 +57,7 @@ In this lab we will take a look at the HTTP templates.
             "tenant_name": "demo",
             "app_name": "lab3a",
             "virtual_address": "10.1.20.20",
-            "virtual_port": 443,
+            "virtual_port": 80,
             "enable_pool": true, 
             "pool_members": ["10.1.10.5", "10.1.10.10"],
             "pool_port": 8080,
