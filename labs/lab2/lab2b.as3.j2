@@ -17,7 +17,7 @@
                 "serviceMain": {
                     "class": "Service_HTTP",
                     "virtualAddresses": [
-                        "{{ virtual_addresses|join('", "') }}"
+                        "{{ virtualAddresses|join('", "') }}"
                     ],
                     "pool": "web_pool"
                 },
@@ -29,7 +29,7 @@
                     "members": [{
                         "servicePort": 8080,
                         "serverAddresses": [
-                            "{{ pool_members|join('", "') }}"
+                            "{{ serverAddresses|join('", "') }}"
                         ]
                     }]
                 }

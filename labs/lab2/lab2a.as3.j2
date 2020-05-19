@@ -17,7 +17,7 @@
                 "serviceMain": {
                     "class": "Service_HTTP",
                     "virtualAddresses": [
-                        "{{ virtual_address }}"
+                        "{{ virtualAddresses }}"
                     ],
                     "pool": "web_pool"
                 },
@@ -29,7 +29,7 @@
                     "members": [{
                         "servicePort": 80,
                         "serverAddresses": [
-                            "{{ pool_members }}"
+                            "{{ serverAddresses }}"
                         ]
                     }]
                 }

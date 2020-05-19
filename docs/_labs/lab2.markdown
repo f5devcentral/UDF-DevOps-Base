@@ -46,9 +46,8 @@ Ensure you havce the latest version of the lab from GitHub then open the lab2 fo
 1. Create a YAML data file called lab2a.yml in the lab2 directory:
     ~/projects/UDF-DevOps-Base/labs/lab2/lab2a.yml
 
-        virtual_address: 10.1.20.20
-        pool_members:
-            - 10.1.10.5
+        virtualAddresses: 10.1.20.20
+        serverAddresses: 10.1.10.5
 
 2. Open the lab2a.as3.j2 template file and examine it.
     
@@ -75,11 +74,11 @@ To make our Jinja2 template a little more useful, we're going to introduce loopi
 
 1. Create a new yaml data file called lab2b.yml:
 
-        virtual_addresses: 
+        virtualAddresses:
           - 10.1.20.20
-        pool_members:
+        serverAddresses:
           - 10.1.10.4
-          - 10.1.10.5
+          - 10.1.20.5
 
 2. Create the AS3 declaration using Jinja2
 
