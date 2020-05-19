@@ -5,3 +5,5 @@ docs/.jekyll-metadata
 docs/vendor
 
 **/inspec.lock
+labs/lab2/lab2a.as3.json
+labs/lab2/lab2a.yml
