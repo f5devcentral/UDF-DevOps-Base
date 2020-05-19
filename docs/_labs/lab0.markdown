@@ -39,6 +39,7 @@ tags:
         docker exec -it f5-cli f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/bigip1.do.json
 
 8. Onboard BIG-IP2
+
     8.1. authenticate the F5-CLI against BIG-IP1:
         
         docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.7 --user admin --password $bigip_pwd
@@ -49,6 +50,6 @@ tags:
 
     8.3. configure DO for BIG-IP2:
         
-        docker exec -it f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/bigip2.do.json
+        docker exec -it f5-cli f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/bigip2.do.json
 
 Your BIG-IPs are now ready to accept AS3 declarations.
