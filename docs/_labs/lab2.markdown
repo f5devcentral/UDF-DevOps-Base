@@ -110,7 +110,7 @@ To make our Jinja2 template a little more useful, we're going to introduce loopi
 
 4. Issue AS3 Declaration
 
-        docker exec -it f5-sdk f5 bigip extension as3 create --declaration /f5-cli/labs/lab2/lab2b.json
+        docker exec -it f5-sdk f5 bigip extension as3 create --declaration /f5-cli/projects/UDF-DevOps-Base/labs/lab2/lab2b.as3.json
 
 ## Testing
 
