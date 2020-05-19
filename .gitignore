@@ -4,6 +4,11 @@ docs/.jekyll-cache
 docs/.jekyll-metadata
 docs/vendor
 
+# InSpec files
 **/inspec.lock
+
+# Lab files user will create
 labs/lab2/lab2a.as3.json
 labs/lab2/lab2a.yml
+labs/lab2/lab2b.yml
+labs/lab2/lab2b.as3.json

@@ -74,7 +74,21 @@ To make our Jinja2 template a little more useful, we're going to introduce loopi
 
 1. Create a new yaml data file called lab2b.yml:
 
-    
+    virtual_addresses: 
+        - 10.1.20.20
+    pool_members:
+        - 10.1.10.4
+        - 10.1.10.5
+
+2. Create the AS3 declaration using Jinja2
+
+    jinja2 lab2b.as3.j2 lab2b.yml > lab2b.as3.json
+
+3. Open the AS3 declaration and examine it:
+
+* Virtual addresses now supports the correct data type based on the AS3 schema
+* Pool members now supports the correct data type based on the AS3 schema
+* Pool members can now be dynamically added and removed
 
 ## Issue AS3 Declaration to BIG-IP
 
