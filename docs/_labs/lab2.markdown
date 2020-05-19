@@ -10,7 +10,7 @@ tags:
 ---
 ## Overview
 
-In this lab, we will leverage Jinaj2, a very powerful template engine, to generate dynamic AS3 declarations.  A few advantages dynamic template offer you and your team:
+In this lab, we will leverage [Jinja2](https://jinja.palletsprojects.com/en/2.11.x/), a very powerful template engine, to generate dynamic AS3 declarations.  A few advantages dynamic template offer you and your team:
 
 * Code reuse 
 * simplified logic
@@ -27,7 +27,7 @@ Ideally, in a production environment you will want to use a template engine, lik
 ## Environment
 
 In this lab we will deploy an HTTP application on the F5 BIG-IP.  This lab will
-leverage the following F5 components:
+leverage the following components:
 
 * [F5 BIG-IP][F5 BIG-IP]
 * [F5 Automation Toolchain][F5 Automation Toolchain]
@@ -36,13 +36,14 @@ leverage the following F5 components:
 * [InSpec][InSpec]
 
 ## Setup
-Ensure you havce the latest version of the lab from GitHub then open the lab2 folder
+Ensure you havce the latest version of the lab from GitHub then open the lab2 folder:
 
     cd ~/projects/UDF-DevOps-Base
     git pull
     cd labs/lab2
 
 ## Create AS3 Declaration
+
 1. Create a YAML data file called lab2a.yml in the lab2 directory:
     ~/projects/UDF-DevOps-Base/labs/lab2/lab2a.yml
 
@@ -51,26 +52,26 @@ Ensure you havce the latest version of the lab from GitHub then open the lab2 fo
 
 2. Open the lab2a.as3.j2 template file and examine it.
     
-* looks very familiar to the declaration from lab1 with the addition of variables wrapped in curly brackets
+* it should look familiar to the declaration from lab1 
 * simple declaration
 
-3. Create the AS3 declaration using Jinja2
+3. Create the AS3 declaration using Jinja2:
 
         jinja2 lab2a.as3.j2 lab2a.yml > lab2a.as3.json
 
-4. Open the new AS3 declaration in VS Code and examine it
+4. Open the new AS3 declaration in VS Code and examine it:
 
-* identical declaration to the one from lab1 (minus the declaration id)
+* similar to the declaration from lab1 
 
         diff lab2a.as3.json ../lab1/http.as3.json
 
 * static assignment of virtual server and pool members
 
-Congratulations, you have created your first Jinja2 template and AS3 declaration!  However, you are probably not patting yourself on the back just yet as you have undoubtably noticed that this declaration does not  scale or even work well in a production environment.  Let's fix that!
+Congratulations, you have created your Jinja2 template and AS3 declaration!  However, you have undoubtably noticed that this declaration does not scale or work well in a production environment.  Let's fix that!
 
-## Jinja2 Loops
+## Looping over Variables
 
-To make our Jinja2 template a little more useful, we're going to introduce looping so we can add multiple virtual_addresses and multiple_pool members.
+To make our Jinja2 template a little more useful, we are going to introduce [Jinja filters](https://jinja.palletsprojects.com/en/2.11.x/templates/#filters) so we can add multiple virtual addresses and multiple pool members.
 
 1. Create a new yaml data file called lab2b.yml:
 
@@ -86,9 +87,41 @@ To make our Jinja2 template a little more useful, we're going to introduce loopi
 
 3. Open the AS3 declaration and examine it:
 
-* Virtual addresses now supports the correct data type based on the AS3 schema
-* Pool members now supports the correct data type based on the AS3 schema
+* Virtual addresses in the declaration now support the correct data type based on the AS3 schema
+* Pool members in the declaration now support the correct data type based on the AS3 schema
 * Pool members can now be dynamically added and removed
+
+## Multiple Applications
+Now we will extend the Jinja2 template to support multiple applications under the demo tenant.
+
+1. Create a new yaml data file called lab2c.yml:
+
+        apps:
+          - name: test1.f5demos.com
+            virtualAddresses:
+              - 10.1.20.20
+            virtualPort: 80
+            servicePort: 80
+            serverAddresses:
+              - 10.1.10.5
+              - 10.1.10.10
+          - name: test2.f5demos.com
+            virtualAddresses:
+              - 10.1.20.20
+            virtualPort: 8080
+            servicePort: 8080
+            serverAddresses:
+              - 10.1.10.5
+              - 10.1.10.10
+
+2. Create the AS3 declaration using Jinja2
+
+        jinja2 lab2c.as3.j2 lab2c.yml > lab2c.as3.json
+
+3. Open the AS3 declaration and examine it:
+
+* You should see multiple applications under the demo tenant
+        
 
 ## Issue AS3 Declaration to BIG-IP
 
@@ -110,7 +143,7 @@ To make our Jinja2 template a little more useful, we're going to introduce loopi
 
 4. Issue AS3 Declaration
 
-        docker exec -it f5-sdk f5 bigip extension as3 create --declaration /f5-cli/projects/UDF-DevOps-Base/labs/lab2/lab2b.as3.json
+        docker exec -it f5-sdk f5 bigip extension as3 create --declaration /f5-cli/projects/UDF-DevOps-Base/labs/lab2/lab2c.as3.json
 
 ## Testing
 
