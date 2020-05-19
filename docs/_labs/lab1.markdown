@@ -26,6 +26,7 @@ leverage the following F5 components:
 * [F5 BIG-IP][F5 BIG-IP]
 * [F5 Automation Toolchain][F5 Automation Toolchain]
 * [F5 CLI][F5 CLI]
+* [InSpec][InSpec]
 
 ## Setup
 
@@ -52,7 +53,7 @@ leverage the following F5 components:
 
 5. Issue AS3 Declaration
 
-        docker exec -it f5-cli f5 bigip extension as3 create --declaration /f5-cli/labs/lab1/http.as3.json
+        docker exec -it f5-cli f5 bigip extension as3 create --declaration /f5-cli/projects/UDF-DevOps-Base/labs/lab1/http.as3.json
 
 ## Testing
 
