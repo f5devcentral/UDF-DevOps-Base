@@ -1,4 +1,5 @@
 {
+    "$schema": "https://raw.githubusercontent.com/F5Networks/f5-appsvcs-extension/master/schema/latest/as3-schema.json",
     "class": "AS3",
     "action": "deploy",
     "persist": true,
@@ -6,7 +7,8 @@
         "class": "ADC",
         "schemaVersion": "3.0.0",
         "label": "Demo",
-        "remark": "Demo Python SDK",
+        "id": "lab1",
+        "remark": "Demo F5 CLI",
         "Demo": {
             "class": "Tenant",
             "A1": {
