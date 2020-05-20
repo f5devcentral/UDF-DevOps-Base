@@ -10,7 +10,7 @@ tags:
 ---
 ## Overview
 
-In this lab, we will leverage F5 Application Service Templates ([FAST][FAST], to help streamline application deployments.
+In this lab, we will leverage F5 Application Service Templates ([FAST][FAST]), to help streamline application deployments.
 
 ## Prerequisites
 
@@ -20,16 +20,16 @@ In this lab, we will leverage F5 Application Service Templates ([FAST][FAST], to
 
 ## Environment
 
-In this lab we will deploy an HTTP application on the F5 BIG-IP.  This lab will
+In this lab we will deploy two HTTP applications on the F5 BIG-IP.  This lab will
 leverage the following components:
 
 * [F5 BIG-IP][F5 BIG-IP]
 * [F5 Automation Toolchain][F5 Automation Toolchain]
-* [FAST Extension][FAST]I]
+* [FAST Extension][FAST]
 * [InSpec][InSpec]
 
-## Setup
-Ensure you havce the latest version of the lab from GitHub then open the lab2 folder:
+## Deploy Our First Application
+Ensure you have the latest version of the lab from GitHub then open the lab3 folder:
 
     cd ~/projects/UDF-DevOps-Base
     git pull
@@ -37,7 +37,7 @@ Ensure you havce the latest version of the lab from GitHub then open the lab2 fo
 
 Ensure FAST is running and read:
 
-        curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/info | jq
+    curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/info | jq
 
 ## Exploring FAST templates
 
@@ -49,7 +49,7 @@ FAST provides some default templates to get you started:
 
 In this lab we will take a look at the HTTP templates. 
 
-1. Create lab3a.json, this will be our POST payload:
+1. Create _lab3a.json_, this will be our POST payload:
 
         {
           "name": "bigip-fast-templates/http",
@@ -84,6 +84,7 @@ In this lab we will take a look at the HTTP templates.
 
 2. Post the payload:
 
+        # replace with your BIG-IP password
         export bigip_pwd=enteryourpassword
         fast_task_id=$(curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/applications -X POST --header "Content-Type: application/json" -d "@lab3a.json" | jq '.message[0].id' -r)
 
@@ -91,18 +92,19 @@ In this lab we will take a look at the HTTP templates.
 
         curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/tasks/$fast_task_id
 
+    You should see a 200 response if everything was successful.
 
-You have now deployed your first FAST application!! 
+Congratulations, you have now deployed your first FAST application!! 
 
-One of the big advantages FAST templates have over native AS3 is that FAST manages compiling all the applications of a tenant together when building the AS3 declaration.  This is a nice benefit for customers that are new to automation and do not quite have their source of truth solution figured out.  We'll take a look at this in the next section.
+One of the big advantages FAST templates have over native AS3 is that FAST manages compiling all the applications of a tenant together when building the AS3 declaration.  For customers that are new to automation this provides a great starting point on your automation path.  We'll take a look at this in the next section.
 
-## Deploy Our Port 8080 Application
-Normally with AS3 we would combine both application definitions under the tenant in a single AS3 declaration; this is what you did in Lab2c.  With FAST, we can treat each application seperatly and FAST will handle stitching everything together to build a proper AS3 declaration.  For customers that are new to automation this provides a great starting point on your automation path.
+## Deploy Our Second Application
+Normally with AS3 we would combine both application definitions under the tenant in a single AS3 declaration; this is what you did in Lab2c.  With FAST, we can treat each application seperatly and FAST will handle stitching everything together to build a proper AS3 declaration.  
 
 In this exercise, we will deploy our second application on port 8080.
 
 
-1. Create lab3b.json, this will be our POST payload:
+1. Create _lab3b.json_, this will be our POST payload:
 
         {
           "name": "bigip-fast-templates/http",
@@ -125,7 +127,7 @@ In this exercise, we will deploy our second application on port 8080.
           }
         }
 
-  Everything in this data file looks similar to lab3a except for the virtual_port and then pool_port.  You could further simplify this type of deployment by building your own templates that remove some of the common attributes that do not apply to your environment.
+  Everything in this data file looks similar to lab3a except for the _virtual_port_ and the _pool_port_.  You could further simplify this type of deployment by building your own templates that remove some of the common attributes that do not apply to your environment.
 
 2. Post the payload:
 
@@ -139,20 +141,18 @@ In this exercise, we will deploy our second application on port 8080.
 
 ## Testing
 
-For testing we will use Chef InSpec_.
+For testing we will use Chef [InSpec][InSpec].
 This tool is commonly used in automated deployments and offers
 a wide variaty of both infrastructure and application testing options.
 
 Test that the deployment was successful:
-
-  > **NOTE**: If you are still in the F5 CLI container, you will need to either exit or open a new terminal
 
     cd ~/projects/UDF-DevOps-Base/labs/lab3
     inspec exec test/app
 
 ## Cleanup
 
-The cleanup the environment, we'll remove the two applications we deployed:
+To cleanup the environment, we'll remove the two applications we deployed:
 
       curl -sku admin:$bigip_pwd -X DELETE https://10.1.1.6/mgmt/shared/fast/applications/demo/lab3a
       
@@ -165,4 +165,4 @@ The cleanup the environment, we'll remove the two applications we deployed:
 [F5 BIG-IP]: https://www.f5.com/products/big-ip-services/virtual-editions
 [F5 Automation Toolchain]: https://www.f5.com/products/automation-and-orchestration
 [InSpec]: https://www.inspec.io/
-[FAST]
+[FAST]: https://clouddocs.f5.com/products/extensions/f5-appsvcs-templates/latest/
