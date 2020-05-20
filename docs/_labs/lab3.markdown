@@ -60,6 +60,59 @@ In this lab we will take a look at the HTTP templates.
             "virtual_port": 80,
             "enable_pool": true, 
             "pool_members": ["10.1.10.5", "10.1.10.10"],
+            "pool_port": 80,
+            "enable_snat": false, 
+            "enable_tls_server": false, 
+            "enable_tls_client": false, 
+            "make_http_profile": false, 
+            "enable_persistence": false, 
+            "enable_acceleration": false, 
+            "enable_compression": false, 
+            "enable_multiplex": false
+          }
+        }
+  
+  In this YAML file, we're setting the the following variables:
+
+  * Tenant Name
+  * App Name
+  * Virtual Address
+  * Virtual Port
+  * Pool members
+  * Pool port
+  * everything else is a required attribute of this template
+
+2. Post the payload:
+
+        export bigip_pwd=enteryourpassword
+        fast_task_id=$(curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/applications -X POST --header "Content-Type: application/json" -d "@lab3a.json" | jq '.message[0].id' -r)
+
+3. Check the response:
+
+        curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/tasks/$fast_task_id
+
+
+You have now deployed your first FAST application!! 
+
+One of the big advantages FAST templates have over native AS3 is that FAST manages compiling all the applications of a tenant together when building the AS3 declaration.  This is a nice benefit for customers that are new to automation and do not quite have their source of truth solution figured out.  We'll take a look at this in the next section.
+
+## Deploy Our Port 8080 Application
+Normally with AS3 we would combine both application definitions under the tenant in a single AS3 declaration; this is what you did in Lab2c.  With FAST, we can treat each application seperatly and FAST will handle stitching everything together to build a proper AS3 declaration.  For customers that are new to automation this provides a great starting point on your automation path.
+
+In this exercise, we will deploy our second application on port 8080.
+
+
+1. Create lab3a.json, this will be our POST payload:
+
+        {
+          "name": "bigip-fast-templates/http",
+          "parameters": {
+            "tenant_name": "demo",
+            "app_name": "lab3b",
+            "virtual_address": "10.1.20.20",
+            "virtual_port": 8080,
+            "enable_pool": true, 
+            "pool_members": ["10.1.10.5", "10.1.10.10"],
             "pool_port": 8080,
             "enable_snat": false, 
             "enable_tls_server": false, 
@@ -72,17 +125,30 @@ In this lab we will take a look at the HTTP templates.
           }
         }
 
+  Everything in this data file looks similar to lab3a except for the virtual_port and then pool_port.  You could further simplify this type of deployment by building your own templates that remove some of the common attributes that do not apply to your environment.
+
 2. Post the payload:
 
         export bigip_pwd=enteryourpassword
-        fast_task_id=$(curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/applications -X POST --header "Content-Type: application/json" -d "@lab3a.json" | jq '.message[0].id' -r)
+        fast_task_id=$(curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/applications -X POST --header "Content-Type: application/json" -d "@lab3b.json" | jq '.message[0].id' -r)
 
 3. Check the response:
 
         curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/tasks/$fast_task_id
 
 
-## Cleanup
+## Testing
+
+For testing we will use Chef InSpec_.
+This tool is commonly used in automated deployments and offers
+a wide variaty of both infrastructure and application testing options.
+
+Test that the deployment was successful:
+
+  > **NOTE**: If you are still in the F5 CLI container, you will need to either exit or open a new terminal
+
+    cd ~/projects/UDF-DevOps-Base/labs/lab3
+    inspec exec test/app
 
 TBD
 
