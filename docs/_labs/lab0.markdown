@@ -37,12 +37,14 @@ tags:
 
     ```bash
     cd ~/projects
+    ```
 
 9. Get Latest Version of the Lab
     ```bash
     git remote add upstream https://github.com/F5SolutionsEngineering/UDF-DevOps-Base.git
     git fetch upstream
     git merge upstream/master
+    ```
 
     # replace your GitHub username
     git clone https://github.com/<githubusername>/UDF-DevOps-Base.git
@@ -57,17 +59,61 @@ tags:
 ## Install BIG-IP ATC and FAST extension
 In preperation for further labs we need to install the F5 Automation Toolchain and the F5 Application Service Templates extensions.
 
-1. Install ATC on BIG-IP1:
-    
-    ```bash
-    docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
-    docker exec -it f5-cli f5 extension do install
-    docker exec -it f5-cli f5 extension as3 install
-    docker exec -it f5-cli f5 extension ts install 
+1. Set the BIG-IP password and ATC versions as an environment variables:
 
+    > **NOTE**: Obtain the BIG-IP password on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
+
+    ```bash
+    export bigip_pwd=replaceme
+    export as3_version=3.19.1
+    export do_version=1.12.0
+    export ts_version=1.11.0
     ```
 
+2. Install ATC on BIG-IP1 and BIG-IP2:
 
+    > **Note**: If the F5-CLI Docker container is not running, start it with the 'docker start f5-cli' command
+    
+    ```bash
+    docker start f5-cli
+    for in in {6..7} 
+    do
+        docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.$i --user admin --password $bigip_pwd
+        docker exec -it f5-cli f5 bigip extension do install --version $do_version
+        docker exec -it f5-cli f5 bigip extension as3 install --version $as3_version
+        docker exec -it f5-cli f5 bigip extension ts install --version $ts_version
+    done
+    ```
+
+2. Install FAST on BIG-IP1 and BIG-IP2:
+
+    ```bash
+    for i in {6..7} 
+    do
+        cd /tmp
+        FN=f5-appsvcs-templates-1.0.0-1.noarch.rpm
+        wget https://github.com/F5Networks/f5-appsvcs-templates/releases/download/v1.0.0/$FN
+        CREDS=admin:$bigip_pwd
+        IP=10.1.1.$i
+        LEN=$(wc -c $FN | awk 'NR==1{print $1}')
+        curl -kvu $CREDS https://$IP/mgmt/shared/file-transfer/uploads/$FN -H 'Content-Type: application/octet-stream' -H "Content-Range: 0-$((LEN - 1))/$LEN" -H "Content-Length: $LEN" -H 'Connection: keep-alive' --data-binary @$FN
+        DATA="{\"operation\":\"INSTALL\",\"packageFilePath\":\"/var/config/rest/downloads/$FN\"}"
+        curl -kvu $CREDS "https://$IP/mgmt/shared/iapp/package-management-tasks" -H "Origin: https://$IP" -H 'Content-Type: application/json;charset=UTF-8' --data $DATA
+    done
+    ```
+
+## Test the ATC and FAST Extensions
+An important, but often overlooked, part of automation is the creation of test cases to ensure the automation achieved the desired outcome. In this lab, we will leverage the Chef [InSpec][InSpec] tool.  InSpec is based on Ruby and provides a framework to test infrastructure deployed in a public or private cloud.
+
+```bash
+cd ~/projects/UDF-DevOps-Base/labs/lab0
+for i in {6..7} 
+do
+    inspec exec https://github.com/F5SolutionsEngineering/big-ip-atc-ready.git \
+    --input bigip_address=10.1.1.6 password=$bigip_pwd do_version=$do_version \
+    as3_version=$as3_version ts_version=$ts_version
+done
+```
 
 ## Onboard the BIG-IP
 
