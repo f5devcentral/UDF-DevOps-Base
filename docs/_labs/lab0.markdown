@@ -38,6 +38,12 @@ tags:
     ```bash
     cd ~/projects
 
+9. Get Latest Version of the Lab
+    ```bash
+    git remote add upstream https://github.com/F5SolutionsEngineering/UDF-DevOps-Base.git
+    git fetch upstream
+    git merge upstream/master
+
     # replace your GitHub username
     git clone https://github.com/<githubusername>/UDF-DevOps-Base.git
     ```
