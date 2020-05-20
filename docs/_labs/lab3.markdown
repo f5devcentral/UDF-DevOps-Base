@@ -19,8 +19,8 @@ In this lab, we will leverage F5 Application Service Templates ([FAST][FAST]), t
 
 ## Environment
 
-In this lab we will deploy two HTTP applications on the F5 BIG-IP.  This lab will
-leverage the following components:
+In this lab, we will deploy two HTTP applications on the F5 BIG-IP.  This lab will
+leverage the following components and tools:
 
 * [F5 BIG-IP][F5 BIG-IP]
 * [F5 Automation Toolchain][F5 Automation Toolchain]
@@ -30,13 +30,17 @@ leverage the following components:
 ## Deploy Our First Application
 Ensure you have the latest version of the lab from GitHub then open the lab3 folder:
 
-    cd ~/projects/UDF-DevOps-Base
-    git pull
-    cd labs/lab3
+  ```bash
+  cd ~/projects/UDF-DevOps-Base
+  git pull
+  cd labs/lab3
+  ```
 
 Ensure FAST is running and read:
 
-    curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/info | jq
+  ```bash
+  curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/info | jq
+  ```
 
 ## Exploring FAST templates
 
@@ -49,29 +53,30 @@ FAST provides some default templates to get you started:
 In this lab we will take a look at the HTTP templates. 
 
 1. Create _lab3a.json_, this will be our POST payload:
+  ```json
+    {
+      "name": "bigip-fast-templates/http",
+      "parameters": {
+        "tenant_name": "demo",
+        "app_name": "lab3a",
+        "virtual_address": "10.1.20.20",
+        "virtual_port": 80,
+        "enable_pool": true, 
+        "pool_members": ["10.1.10.5", "10.1.10.10"],
+        "pool_port": 80,
+        "enable_snat": false, 
+        "enable_tls_server": false, 
+        "enable_tls_client": false, 
+        "make_http_profile": false, 
+        "enable_persistence": false, 
+        "enable_acceleration": false, 
+        "enable_compression": false, 
+        "enable_multiplex": false
+      }
+    }
+  ```
 
-        {
-          "name": "bigip-fast-templates/http",
-          "parameters": {
-            "tenant_name": "demo",
-            "app_name": "lab3a",
-            "virtual_address": "10.1.20.20",
-            "virtual_port": 80,
-            "enable_pool": true, 
-            "pool_members": ["10.1.10.5", "10.1.10.10"],
-            "pool_port": 80,
-            "enable_snat": false, 
-            "enable_tls_server": false, 
-            "enable_tls_client": false, 
-            "make_http_profile": false, 
-            "enable_persistence": false, 
-            "enable_acceleration": false, 
-            "enable_compression": false, 
-            "enable_multiplex": false
-          }
-        }
-  
-  In this YAML file, we're setting the the following variables:
+  In this YAML file, we're setting the following variables:
 
   * Tenant Name
   * App Name
@@ -83,80 +88,91 @@ In this lab we will take a look at the HTTP templates.
 
 2. Post the payload:
 
-        # replace with your BIG-IP password
-        export bigip_pwd=enteryourpassword
-        fast_task_id=$(curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/applications -X POST --header "Content-Type: application/json" -d "@lab3a.json" | jq '.message[0].id' -r)
+  ```bash
+  # replace with your BIG-IP password
+  export bigip_pwd=enteryourpassword
+
+  fast_task_id=$(curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/applications -X POST --header "Content-Type: application/json" -d "@lab3a.json" | jq '.message[0].id' -r)
+  ```
 
 3. Check the response:
 
-        curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/tasks/$fast_task_id
+  ```bash
+  curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/tasks/$fast_task_id
+  ```
 
     You should see a 200 response if everything was successful.
 
 Congratulations, you have now deployed your first FAST application!! 
 
-One of the big advantages FAST templates have over native AS3 is that FAST manages compiling all the applications of a tenant together when building the AS3 declaration.  For customers that are new to automation this provides a great starting point on your automation path.  We'll take a look at this in the next section.
+One of the advantages FAST templates have over native AS3 is that FAST manages compiling all the applications of a tenant together when building the AS3 declaration.  For customers that are new to automation, FAST provides an ideal starting point.  We'll take a look at this in the next section.
 
 ## Deploy Our Second Application
-Normally with AS3 we would combine both application definitions under the tenant in a single AS3 declaration; this is what you did in Lab2c.  With FAST, we can treat each application seperatly and FAST will handle stitching everything together to build a proper AS3 declaration.  
+A unique features of FAST is that it treats each application separately, and it will handle stitching everything together to build a proper AS3 declaration.  
 
 In this exercise, we will deploy our second application on port 8080.
 
 
 1. Create _lab3b.json_, this will be our POST payload:
 
-        {
-          "name": "bigip-fast-templates/http",
-          "parameters": {
-            "tenant_name": "demo",
-            "app_name": "lab3b",
-            "virtual_address": "10.1.20.20",
-            "virtual_port": 8080,
-            "enable_pool": true, 
-            "pool_members": ["10.1.10.5", "10.1.10.10"],
-            "pool_port": 8080,
-            "enable_snat": false, 
-            "enable_tls_server": false, 
-            "enable_tls_client": false, 
-            "make_http_profile": false, 
-            "enable_persistence": false, 
-            "enable_acceleration": false, 
-            "enable_compression": false, 
-            "enable_multiplex": false
-          }
-        }
+  ```json
+  {
+    "name": "bigip-fast-templates/http",
+    "parameters": {
+      "tenant_name": "demo",
+      "app_name": "lab3b",
+      "virtual_address": "10.1.20.20",
+      "virtual_port": 8080,
+      "enable_pool": true, 
+      "pool_members": ["10.1.10.5", "10.1.10.10"],
+      "pool_port": 8080,
+      "enable_snat": false, 
+      "enable_tls_server": false, 
+      "enable_tls_client": false, 
+      "make_http_profile": false, 
+      "enable_persistence": false, 
+      "enable_acceleration": false, 
+      "enable_compression": false, 
+      "enable_multiplex": false
+    }
+  }
+  ```
 
   Everything in this data file looks similar to lab3a except for the _virtual_port_ and the _pool_port_.  You could further simplify this type of deployment by building your own templates that remove some of the common attributes that do not apply to your environment.
 
 2. Post the payload:
 
-        export bigip_pwd=enteryourpassword
-        fast_task_id=$(curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/applications -X POST --header "Content-Type: application/json" -d "@lab3b.json" | jq '.message[0].id' -r)
+  ```bash
+  fast_task_id=$(curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/applications -X POST --header "Content-Type: application/json" -d "@lab3b.json" | jq '.message[0].id' -r)
+```
 
 3. Check the response:
 
-        curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/tasks/$fast_task_id
-
+  ```bash
+  curl -sku admin:$bigip_pwd  https://10.1.1.6/mgmt/shared/fast/tasks/$fast_task_id
+  ```
 
 ## Testing
 
 For testing we will use Chef [InSpec][InSpec].
 This tool is commonly used in automated deployments and offers
-a wide variaty of both infrastructure and application testing options.
+a wide variety of both infrastructure and application testing options.
 
 Test that the deployment was successful:
 
-    cd ~/projects/UDF-DevOps-Base/labs/lab3
-    inspec exec test/app
+```bash
+cd ~/projects/UDF-DevOps-Base/labs/lab3
+inspec exec test/app
+```
 
 ## Cleanup
 
 To cleanup the environment, we'll remove the two applications we deployed:
 
-      curl -sku admin:$bigip_pwd -X DELETE https://10.1.1.6/mgmt/shared/fast/applications/demo/lab3a
-      
-
-      curl -sku admin:$bigip_pwd -X DELETE https://10.1.1.6/mgmt/shared/fast/applications/demo/lab3b 
+```bash
+curl -sku admin:$bigip_pwd -X DELETE https://10.1.1.6/mgmt/shared/fast/applications/demo/lab3a
+curl -sku admin:$bigip_pwd -X DELETE https://10.1.1.6/mgmt/shared/fast/applications/demo/lab3b 
+```
 
 
 [F5 CLI]: https://clouddocs.f5.com/sdk/f5-cli/
