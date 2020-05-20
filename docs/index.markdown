@@ -13,6 +13,7 @@ The goal of this content is to help train people on the various ways to automate
 
 1. Access to the F5 Unified Demo Framework (UDF)
 2. Chrome browser 
+3. Access to a hosted Git repository (Github, GitLab, etc)
 
 ## Environment
 

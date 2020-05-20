@@ -25,31 +25,74 @@ tags:
     > **_NOTE:_** Obtain the BIG-IP password on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
         
         export bigip_pwd=replaceme
-7. Onboard BIG-IP1
-    7.1. authenticate the F5-CLI against BIG-IP1:
+7. Fork the UDF-Devops-Base repository
+
+    The labs for this UDF blueprint can be found on [GitHub](https://github.com/F5SolutionsEngineering/UDF-DevOps-Base).  You will need to fork this repository into your own GitHub environmnent. 
+    
+    For information on how to do this, please visit the [GitHub documentation page](https://help.github.com/en/github/getting-started-with-github/fork-a-repo#fork-an-example-repository).
+
+8. Checkout Forked Repository
+
+    To conduct the labs, you will need to check our your forked version of the repository:
+
+    ```bash
+    cd ~/projects
+
+    # replace your GitHub username
+    git clone https://github.com/<githubusername>/UDF-DevOps-Base.git
+    ```
+
+9. Change into the Lab0 directory:
+
+    ```bash
+    cd ~/projects/UDF-DevOps-Base/labs/lab0
+    ```
+
+## Install BIG-IP ATC and FAST extension
+In preperation for further labs we need to install the F5 Automation Toolchain and the F5 Application Service Templates extensions.
+
+1. Install ATC on BIG-IP1:
+    
+    ```bash
+    docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
+    docker exec -it f5-cli f5 extension do install
+    docker exec -it f5-cli f5 extension as3 install
+    docker exec -it f5-cli f5 extension ts install 
+
+    ```
+
+
+
+## Onboard the BIG-IP
+
+1. Onboard BIG-IP1
+    1.1. authenticate the F5-CLI against BIG-IP1:
         
         docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
 
-    7.2. verify the Declarative Onboarding installation:
+    1.2. verify the Declarative Onboarding installation:
         
         docker exec -it f5-cli f5 bigip extension do verify
 
-    7.3. configure DO for BIG-IP1:
+    1.3. configure DO for BIG-IP1:
         
         docker exec -it f5-cli f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/bigip1.do.json
 
-8. Onboard BIG-IP2
+2. Onboard BIG-IP2
 
-    8.1. authenticate the F5-CLI against BIG-IP1:
+    2.1. authenticate the F5-CLI against BIG-IP1:
         
         docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.7 --user admin --password $bigip_pwd
 
-    8.2. verify the Declarative Onboarding installation:
+    2.2. verify the Declarative Onboarding installation:
         
         docker exec -it f5-cli f5 bigip extension do verify
 
-    8.3. configure DO for BIG-IP2:
+    2.3. configure DO for BIG-IP2:
         
         docker exec -it f5-cli f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/bigip2.do.json
+
+
+## Testing
 
 Your BIG-IPs are now ready to accept AS3 declarations.
