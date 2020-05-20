@@ -102,7 +102,7 @@ Normally with AS3 we would combine both application definitions under the tenant
 In this exercise, we will deploy our second application on port 8080.
 
 
-1. Create lab3a.json, this will be our POST payload:
+1. Create lab3b.json, this will be our POST payload:
 
         {
           "name": "bigip-fast-templates/http",
@@ -150,7 +150,14 @@ Test that the deployment was successful:
     cd ~/projects/UDF-DevOps-Base/labs/lab3
     inspec exec test/app
 
-TBD
+## Cleanup
+
+The cleanup the environment, we'll remove the two applications we deployed:
+
+      curl -sku admin:$bigip_pwd -X DELETE https://10.1.1.6/mgmt/shared/fast/applications/demo/lab3a
+      
+
+      curl -sku admin:$bigip_pwd -X DELETE https://10.1.1.6/mgmt/shared/fast/applications/demo/lab3b 
 
 
 [F5 CLI]: https://clouddocs.f5.com/sdk/f5-cli/
