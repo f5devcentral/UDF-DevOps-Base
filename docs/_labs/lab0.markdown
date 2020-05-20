@@ -9,7 +9,7 @@ tags:
 ---
 ## Setup
 
-1. Login to the [Unified Demo Framework Portal](https://udf.f5.com)
+1. Log in to the [Unified Demo Framework Portal](https://udf.f5.com)
 2. Deploy the DevOps Base blueprint
 
     > **_NOTE:_** For more information on deploying a UDF blueprint, please reference the [UDF documentation](https://help.udf.f5.com/en/)
@@ -22,7 +22,7 @@ tags:
 
 6. Set the BIG-IP password as an environment variable:
 
-    > **_NOTE:_** the BIG-IP password can be found on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
+    > **_NOTE:_** Obtain the BIG-IP password on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
         
         export bigip_pwd=replaceme
 7. Onboard BIG-IP1
@@ -30,7 +30,7 @@ tags:
         
         docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
 
-    7.2. verify Declarative Onboarding is installed and ready:
+    7.2. verify the Declarative Onboarding installation:
         
         docker exec -it f5-cli f5 bigip extension do verify
 
@@ -44,7 +44,7 @@ tags:
         
         docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.7 --user admin --password $bigip_pwd
 
-    8.2. verify Declarative Onboarding is installed and ready:
+    8.2. verify the Declarative Onboarding installation:
         
         docker exec -it f5-cli f5 bigip extension do verify
 

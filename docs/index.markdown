@@ -7,6 +7,8 @@ layout: home
 ## Overview
 {{site.description}}
 
+The goal of this content is to help train people on the various ways to automate F5 products and services, leveraging standard DevOps tools that may be new to you.
+
 ## Prerequisites 
 
 1. Access to the F5 Unified Demo Framework (UDF)
@@ -30,6 +32,6 @@ The UDF blueprint consists of the following resources:
 | Component | Management Subnet (10.1.1.0/24) | Internal Subnet (10.1.10.0/24) | External Subnet (10.1.20.0/24) | Additional IPs | 
 |-----------|---------------------------------|--------------------------------|--------------------------------|---------------|
 | Client Server | 10.1.1.4 | 10.1.10.4 | 10.1.20.4 | none |
-| App Server | 10.1.1.5 | 10.1.10.5 | none | none |
+| App Server | 10.1.1.5 | 10.1.10.5 | none | 10.1.10.10 |
 | BIG-IP1 | 10.1.1.6 | 10.1.10.6 | 10.1.20.6 | 10.1.20.20 |
 | BIG-IP2 | 10.1.1.7 | 10.1.10.7 | 10.1.20.6 | 10.1.20.10 | 
