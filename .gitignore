@@ -10,3 +10,4 @@ docs/vendor
 # Lab files user will create
 labs/lab2/*.json
 labs/lab2/*.yml
+labs/lab3/*.json

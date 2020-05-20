@@ -1,7 +1,0 @@
-tenant_name: TestTenant
-application_name: MyTestApp
-virtual_address: 0.0.0.0
-port: 80
-serverAddresses:
-  - 10.0.0.1
-  - 10.0.0.2
