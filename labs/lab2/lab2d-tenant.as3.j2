@@ -1,0 +1,17 @@
+{
+    "$schema": "https://raw.githubusercontent.com/F5Networks/f5-appsvcs-extension/master/schema/latest/as3-schema.json",
+    "class": "AS3",
+    "action": "deploy",
+    "persist": true,
+    "declaration": {
+        "class": "ADC",
+        "schemaVersion": "3.13.0",
+        "label": "Demo",
+        "id": "lab2c",
+        "remark": "Demo Jinja2 and F5 CLI",
+        "demo": {
+            "class": "Tenant",
+            {% include "lab2d-http.as3.j2" %}
+        }
+    }
+}

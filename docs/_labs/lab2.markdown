@@ -49,7 +49,7 @@ Ensure you have the latest version of the lab from GitHub then open the lab2 fol
 
 1. Create a YAML data file called _lab2a.yml_ in the lab2 directory:
 
-    ```
+    ```yaml
     virtualAddresses: 10.1.20.20
     serverAddresses: 10.1.10.5
     ```
@@ -77,63 +77,118 @@ Ensure you have the latest version of the lab from GitHub then open the lab2 fol
     * Virtual Server IP now set
     * Pool member IP now set
 
-* static assignment of virtual server and pool members
-
-Congratulations, you have created your Jinja2 template and AS3 declaration!  However, you have undoubtedly noticed that this declaration does not scale or work well in a production environment.  Let's fix that!
+Congratulations, you have created your Jinja2 template and AS3 declaration!  However, you have undoubtedly noticed that this declaration does not scale or work well in a production environment due to static assignments.  Let's fix that!
 
 ## Looping over Variables
 
 To make our Jinja2 template a little more useful, we are going to introduce [Jinja filters](https://jinja.palletsprojects.com/en/2.11.x/templates/#filters).  The filter allows us to add multiple virtual addresses and pool members.
 
-1. Create a new yaml data file called lab2b.yml:
+1. Create a new yaml data file called _lab2b.yml_:
 
-        virtualAddresses:
-          - 10.1.20.20
-        serverAddresses:
-          - 10.1.10.5
-          - 10.1.20.10
+    ```yaml
+    virtualAddresses:
+        - 10.1.20.20
+    serverAddresses:
+        - 10.1.10.5
+        - 10.1.20.10
+    ```
 
 2. Create the AS3 declaration using Jinja2
 
-        jinja2 lab2b.as3.j2 lab2b.yml > lab2b.as3.json
+    ```bash
+    jinja2 lab2b.as3.j2 lab2b.yml > lab2b.as3.json
+    ```
 
 3. Open the AS3 declaration and examine it:
 
-* Virtual addresses in the declaration now support the correct data type based on the AS3 schema
-* Pool members in the declaration now support the correct data type based on the AS3 schema
-* Pool members can now be dynamically added and removed
+    * virtualAddresses now supports the correct data type based on the AS3 schema
+    * serverAddresses now supports the correct data type based on the AS3 schema
+    * You can now dynamically added and removed by modifying the data file
 
 ## Multiple Applications
 Now we will extend the Jinja2 template to support multiple applications under the demo tenant.
 
-1. Create a new yaml data file called lab2c.yml:
+1. Create a new yaml data file called _lab2c.yml_:
 
-        apps:
-          - name: test1.f5demos.com
-            virtualAddresses:
-              - 10.1.20.20
-            virtualPort: 80
-            servicePort: 80
-            serverAddresses:
-              - 10.1.10.5
-              - 10.1.10.10
-          - name: test2.f5demos.com
-            virtualAddresses:
-              - 10.1.20.20
-            virtualPort: 8080
-            servicePort: 8080
-            serverAddresses:
-              - 10.1.10.5
-              - 10.1.10.10
+    ```yaml
+    apps: 
+    - 
+        name: test1.f5demos.com
+        serverAddresses: 
+        - "10.1.10.5"
+        - "10.1.10.10"
+        servicePort: 80
+        virtualAddresses: 
+        - "10.1.20.20"
+        virtualPort: 80
+    - 
+        name: test2.f5demos.com
+        serverAddresses: 
+        - "10.1.10.5"
+        - "10.1.10.10"
+        servicePort: 8080
+        virtualAddresses: 
+        - "10.1.20.20"
+        virtualPort: 8080
+    ```
 
 2. Create the AS3 declaration using Jinja2
 
-        jinja2 lab2c.as3.j2 lab2c.yml > lab2c.as3.json
+    ```bash
+    jinja2 lab2c.as3.j2 lab2c.yml > lab2c.as3.json
+    ```
 
 3. Open the AS3 declaration and examine it:
 
-* You should see multiple applications under the demo tenant
+    * You should see multiple applications under the demo tenant
+        * test1.f5demos.com should listen on port 80
+        * test2.f5demos.com should listen on port 8080
         
+At this point, we are closer to what a production example would look like.  However, what happens when we add a new deployment type?    Let's take a look at that next.
+
+## DRY in Action
+So far, we have created two HTTP applications using Jinaj2 and AS3.  However, if we add another deployment type, say TCP, we will start repeating code between the templates.  We can fix this by breaking up our existing template into smaller components.  
+
+1. Create a new data file called _lab2d.yml_:
+
+    ```yaml
+    apps: 
+    - 
+        name: test1.f5demos.com
+        type: http
+        serverAddresses: 
+        - "10.1.10.5"
+        - "10.1.10.10"
+        servicePort: 80
+        virtualAddresses: 
+        - "10.1.20.20"
+        virtualPort: 80
+    - 
+        name: test2.f5demos.com
+        type: http
+        serverAddresses: 
+        - "10.1.10.5"
+        - "10.1.10.10"
+        servicePort: 8080
+        virtualAddresses: 
+        - "10.1.20.20"
+        virtualPort: 8080
+    ```
+
+2. Examine the two template files:
+    * _lab2d-tenant.as3.j2_ - creates the Tenant class
+    * _lab2d-http.as3.j2_ - creates the HTTP classes
+
+3. Create the AS3 declaration using Jinja2
+
+    ```bash
+    jinja2 lab2d-tenant.as3.j2 lab2d.yml > lab2d.as3.json
+    ```
+4. Open the AS3 declaration and examine it:
+
+    * You should see multiple applications under the demo tenant
+        * test1.f5demos.com should listen on port 80
+        * test2.f5demos.com should listen on port 8080
 
 ## Issue AS3 Declaration to BIG-IP
 
@@ -141,21 +196,30 @@ Now we will extend the Jinja2 template to support multiple applications under th
 
     > **NOTE**: The BIG-IP password can be found on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
 
-        export bigip_pwd=replaceme
+    ```bash
+    export bigip_pwd=replaceme
+    ```
 
 2. login to the BIG-IP (using the F5-CLI container)
 
     > **Note**: If the F5-CLI container is not running, start it with the 'docker start f5-cli' command 
         
-        docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
+    ```bash
+    docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
+    ```
+
 
 3. Verify the Application Service 3 Extension is installed
 
-        docker exec -it f5-cli f5 bigip extension as3 verify
+    ```bash
+    docker exec -it f5-cli f5 bigip extension as3 verify
+    ```
 
 4. Issue AS3 Declaration
 
-        docker exec -it f5-cli f5 bigip extension as3 create --declaration /f5-cli/projects/UDF-DevOps-Base/labs/lab2/lab2c.as3.json
+    ```bash
+    docker exec -it f5-cli f5 bigip extension as3 create --declaration /f5-cli/projects/UDF-DevOps-Base/labs/lab2/lab2d.as3.json
+    ```
 
 ## Testing
 
@@ -165,16 +229,18 @@ a wide variety of both infrastructure and application testing options.
 
 Test that the deployment was successful:
 
-  > **NOTE**: If you are still in the F5 CLI container, you will need to either exit or open a new terminal
-
-    cd ~/projects/UDF-DevOps-Base/labs/lab2
-    inspec exec test/app
+```bash
+cd ~/projects/UDF-DevOps-Base/labs/lab2
+inspec exec test/app
+```
 
 ## Cleanup
 
 To cleanup the lab, we need to remove the AS3 declaration deployed to the BIG-IP.  Run the following command in the f5-cli docker container
 
-    docker exec -it f5-cli f5 bigip extension as3 delete --auto-approve
+```bash
+docker exec -it f5-cli f5 bigip extension as3 delete --auto-approve
+```
 
 
 [F5 CLI]: https://clouddocs.f5.com/sdk/f5-cli/

@@ -1,0 +1,27 @@
+            {% for app in apps if app.type == "http" -%}
+            "{{ app.name }}": {
+                "class": "Application",
+                "template": "http",
+                "serviceMain": {
+                    "class": "Service_HTTP",
+                    "virtualAddresses": [
+                        "{{ app.virtualAddresses|join('", "') }}"
+                    ],
+                    "virtualPort" : {{ app.virtualPort }},
+                    "pool": "web_pool"
+                },
+                "web_pool": {
+                    "class": "Pool",
+                    "monitors": [
+                        "http"
+                    ],
+                    "members": [{
+                        "servicePort": {{ app.servicePort }},
+                        "serverAddresses": [
+                            "{{ app.serverAddresses|join('", "') }}"
+                        ]
+                    }]
+                }
+            }{{ "," if not loop.last }}
+            {% endfor -%}
+        
