@@ -2,16 +2,21 @@
 
 title "Declarative Onboarding Ready"
 
-# Check DNS
-control "Declarative Onboarding Ready" do
+# Check Provisioning
+control "Provisioning" do
   impact 1.0
-  title "Test that DO configured the BIG-IP"
-  desc "Ensure that the correct BIG-IP settings were made"
+  title "Test that correct BIG-IP modules are provisioned"
 
   describe command("tmsh list sys provision level | grep nominal -B2") do
     its("stdout") { should include "ltm"}
     its("stdout") { should include "gtm"}
   end
+end
+
+# Check DNS
+control "DNS" do
+  impact 1.0
+  title "Test that the correct DNS name servers were set"
 
   describe command("tmsh show sys ip-address") do
     its("stdout") { should include "8.8.8.8"}
