@@ -68,6 +68,7 @@ In preperation for further labs we need to install the F5 Automation Toolchain a
     export as3_version=3.19.1
     export do_version=1.12.0
     export ts_version=1.11.0
+    export fast_version=1.0.0
     ```
 
 2. Install ATC on BIG-IP1 and BIG-IP2:
@@ -92,7 +93,7 @@ In preperation for further labs we need to install the F5 Automation Toolchain a
     do
         cd /tmp
         FN=f5-appsvcs-templates-1.0.0-1.noarch.rpm
-        wget https://github.com/F5Networks/f5-appsvcs-templates/releases/download/v1.0.0/$FN
+        wget https://github.com/F5Networks/f5-appsvcs-templates/releases/download/v$fast_version/$FN
         CREDS=admin:$bigip_pwd
         IP=10.1.1.$i
         LEN=$(wc -c $FN | awk 'NR==1{print $1}')
@@ -111,7 +112,7 @@ for i in {6..7}
 do
     inspec exec https://github.com/F5SolutionsEngineering/big-ip-atc-ready.git \
     --input bigip_address=10.1.1.6 password=$bigip_pwd do_version=$do_version \
-    as3_version=$as3_version ts_version=$ts_version
+    as3_version=$as3_version ts_version=$ts_version fast_version=$fast_version
 done
 ```
 
