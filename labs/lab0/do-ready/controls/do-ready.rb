@@ -18,7 +18,7 @@ control "DNS" do
   impact 1.0
   title "Test that the correct DNS name servers were set"
 
-  describe command("tmsh show sys ip-address") do
+  describe command("list sys dns name-servers") do
     its("stdout") { should include "8.8.8.8"}
     its("stdout") { should include "8.8.4.4"}
   end
@@ -45,22 +45,22 @@ control "External VLAN Interface" do
 end
 
 # Check Self-IP subnets
-control "Internal Self IP subnet" do
+control "Internal Self IP" do
   impact 1.0
   title "Test that the correct subnet is assigned to the self-ip"
 
   describe command("tmsh list net self internal-self address") do
-    its("stdout") { should include "10.1.10"}
+    its("stdout") { should include input(internal_sip)}
   end
 end
 
 
-control "External Self IP subnet" do
+control "External Self IP" do
   impact 1.0
-  title "Test that the correct subnet is assigned to the self-ip"
+  title "Test that the correct IP is assigned to the self-ip"
 
   describe command("list net self external-self address") do
-    its("stdout") { should include "10.1.20"}
+    its("stdout") { should include input(external_sip)}
   end
 end
 
