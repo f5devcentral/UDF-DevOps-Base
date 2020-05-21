@@ -2,7 +2,9 @@
 name: Lab2
 title: Lab2 - Jinja2 Templates
 description: Demonstrates the ability of Jinja2 to create dynamic AS3 declarations.  While this lab uses the F5-CLI, the same logic applies when using Jinaj2 with Ansible. 
-layout: page
+layout: lab
+edit_date: 05/21/2020
+lab_time: 20 mins
 tags: 
     - f5-cli
     - AS3

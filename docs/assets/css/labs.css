@@ -1,0 +1,25 @@
+#lab_banner img {
+    border-radius: 50%;
+}
+
+#lab_banner .edit_gh {
+    text-align: right;
+}
+
+#toc {
+    position: absolute;
+    left: 50px;
+    top: 190px;
+    width: 200px;
+    font-size: small;
+    word-wrap: break-word;
+}
+
+#toc ul {
+    list-style-type: decimal;
+}
+
+/* #content {
+    float: left;
+    width: 75%;
+} */

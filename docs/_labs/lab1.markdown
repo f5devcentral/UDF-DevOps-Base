@@ -2,7 +2,9 @@
 name: Lab1
 title: Lab1 - F5 CLI Demo
 description: Demonstrates the new F5 CLI to configure an application on the BIG-IP.
-layout: page
+layout: lab
+edit_date: 05/21/2020
+lab_time: 15 mins
 tags: 
     - f5-cli
     - AS3

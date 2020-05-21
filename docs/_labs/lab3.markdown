@@ -2,7 +2,9 @@
 name: Lab3
 title: Lab3 - F5 Application Service Templates
 description: F5 Application Services Templates (FAST) are an easy and effective way to deploy applications on the BIG-IP system using AS3. The FAST Extension provides a toolset for templating and managing AS3 Applications on BIG-IP.
-layout: page
+layout: lab
+edit_date: 05/21/2020
+lab_time: 20 mins
 tags: 
     - fast
     - AS3
