@@ -29,7 +29,7 @@ control "Internal VLAN Interface" do
   impact 1.0
   title "Test that the correct interface is set for the internal VLAN"
 
-  describe command("list net vlan internal interfaces") do
+  describe command("tmsh list net vlan internal interfaces") do
     its("stdout") { should include "1.1"}
   end
 end
@@ -39,7 +39,7 @@ control "External VLAN Interface" do
   impact 1.0
   title "Test that the correct interface is set for the external VLAN"
 
-  describe command("list net vlan internal interfaces") do
+  describe command("tmsh list net vlan internal interfaces") do
     its("stdout") { should include "1.2"}
   end
 end
@@ -49,7 +49,7 @@ control "Internal Self IP subnet" do
   impact 1.0
   title "Test that the correct subnet is assigned to the self-ip"
 
-  describe command("list net self internal-self address") do
+  describe command("tmsh list net self internal-self address") do
     its("stdout") { should include "10.1.10"}
   end
 end
