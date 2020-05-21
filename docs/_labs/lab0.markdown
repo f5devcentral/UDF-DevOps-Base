@@ -12,7 +12,7 @@ tags:
 1. Log in to the [Unified Demo Framework Portal](https://udf.f5.com)
 2. Deploy the DevOps Base blueprint
 
-    > **_NOTE:_** For more information on deploying a UDF blueprint, please reference the [UDF documentation](https://help.udf.f5.com/en/)
+    > **Note:** For more information on deploying a UDF blueprint, please reference the [UDF documentation](https://help.udf.f5.com/en/)
 3. Under components, click the access dropdown on the client system, then click VS CODE
 4. Open a new [terminal](https://code.visualstudio.com/docs/editor/integrated-terminal) in VS Code
 5. Start the F5 CLI Docker container and make sure it's running
@@ -26,7 +26,7 @@ tags:
 
 6. Set the BIG-IP password as an environment variable:
 
-    > **_NOTE:_** Obtain the BIG-IP password on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
+    > **Note:** Obtain the BIG-IP password on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
         
     ```bash
     export bigip_pwd=replaceme
@@ -89,7 +89,10 @@ In preperation for further labs we need to install the F5 Automation Toolchain a
     ```bash
     for in in {6..7} 
     do
+        # authenticate to the BIG-IP
         docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.$i --user admin --password $bigip_pwd
+
+        # install the do, as3 and ts extensions
         docker exec -it f5-cli f5 bigip extension do install --version $do_version
         docker exec -it f5-cli f5 bigip extension as3 install --version $as3_version
         docker exec -it f5-cli f5 bigip extension ts install --version $ts_version
@@ -101,15 +104,30 @@ In preperation for further labs we need to install the F5 Automation Toolchain a
     ```bash
     for i in {6..7} 
     do
+        # move to a temporary directory 
         cd /tmp
+
+        # set the FAST RPM name
         FN=f5-appsvcs-templates-1.0.0-1.noarch.rpm
+        
+        # download the FAST RPM
         wget https://github.com/F5Networks/f5-appsvcs-templates/releases/download/v$fast_version/$FN
+        
+        # set information for curl
         CREDS=admin:$bigip_pwd
         IP=10.1.1.$i
         LEN=$(wc -c $FN | awk 'NR==1{print $1}')
-        curl -kvu $CREDS https://$IP/mgmt/shared/file-transfer/uploads/$FN -H 'Content-Type: application/octet-stream' -H "Content-Range: 0-$((LEN - 1))/$LEN" -H "Content-Length: $LEN" -H 'Connection: keep-alive' --data-binary @$FN
+
+        # upload the FAST RPM
+        curl -kvu $CREDS https://$IP/mgmt/shared/file-transfer/uploads/$FN \
+        -H 'Content-Type: application/octet-stream' \
+        -H "Content-Range: 0-$((LEN - 1))/$LEN" -H "Content-Length: $LEN" \
+        -H 'Connection: keep-alive' --data-binary @$FN
+
+        # install the FAST RPM
         DATA="{\"operation\":\"INSTALL\",\"packageFilePath\":\"/var/config/rest/downloads/$FN\"}"
-        curl -kvu $CREDS "https://$IP/mgmt/shared/iapp/package-management-tasks" -H "Origin: https://$IP" -H 'Content-Type: application/json;charset=UTF-8' --data $DATA
+        curl -kvu $CREDS "https://$IP/mgmt/shared/iapp/package-management-tasks" \
+        -H "Origin: https://$IP" -H 'Content-Type: application/json;charset=UTF-8' --data $DATA
     done
     ```
 
@@ -167,17 +185,41 @@ Now that the BIG-IP1 and BIG-IP2 ATC and FAST extension tests have passed, it's 
     COUNTER=1
     for i in {6..7}
     do  
-        docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.$i --user admin --password $bigip_pwd
-        docker exec -it f5-cli f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/labs/lab0/bigip$COUNTER.do.json
+        # authenticate to the BIG-IP
+        docker exec -it f5-cli f5 login --authentication-provider bigip \
+        --host 10.1.1.$i --user admin --password $bigip_pwd
+
+        # POST the DO declaration
+        docker exec -it f5-cli f5 bigip extension do create --declaration \
+        /f5-cli/projects/UDF-DevOps-Base/labs/lab0/bigip$COUNTER.do.json
+
+        # increment counter
         let COUNTER=COUNTER+1
     done
     ```
 
 4. Test the Onboarding Process
 
+    Run the following InSpec profile to test that the BIG-IP is correctly configured:
+
+    > **Note:** You should see the InSpec test run twice, once for each BIG-IP, and all tests should be green.
+
+    ```bash
+    for i in {6..7}
+    do
+      inspec exec do-ready -t ssh://admin@10.1.1.$i --password=$bigip_pwd \
+      --input internal_sip=$10.1.10.$i external_sip=10.1.20.$i 
+    done
+    ```
+
 [DO]: https://clouddocs.f5.com/products/extensions/f5-declarative-onboarding/latest/
+
+## Conclusion
+You have successfully completed Lab0 and your environment is now ready to run other labs.  Have fun and good luck!
 
 ---
 
 #### Footnotes:
 <small><a name="doexample">1</a>: Declarative Onboarding example of setting the admin users shell can be found [here](https://clouddocs.f5.com/products/extensions/f5-declarative-onboarding/latest/bigip-examples.html?highlight=bash#standalone-declaration).  Note, you do not need the password attribute from this example. <small>
+
+[Edit on GitHub]({{ site.github.repository_url }}/blob/master/{{ page.relative_path }})
