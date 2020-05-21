@@ -1,0 +1,15 @@
+name: do-ready
+title: DO Ready InSpec Profile
+maintainer: F5 Networks
+copyright: F5 Netorks
+copyright_email: info@f5.com
+license: Apache-2.0
+summary: An InSpec Compliance Profile
+version: 0.1.0
+supports:
+  platform: os
+inputs:
+  - name: internal_sip
+    description: internal Self-IP address
+  - name: external_sip
+    description: external Self-IP address

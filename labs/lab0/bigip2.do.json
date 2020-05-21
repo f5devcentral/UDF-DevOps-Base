@@ -8,7 +8,7 @@
         "class": "Tenant",
         "mySystem": {
             "class": "System",
-            "hostname": "ltm.f5demos.com",
+            "hostname": "bigip2.f5demos.com",
             "cliInactivityTimeout": 1200,
             "consoleInactivityTimeout": 1200,
             "autoPhonehome": false
@@ -46,7 +46,7 @@
         },
         "internal-self": {
             "class": "SelfIp",
-            "address": "10.1.10.6/24",
+            "address": "10.1.10.7/24",
             "vlan": "internal",
             "allowService": "default",
             "trafficGroup": "traffic-group-local-only"
@@ -59,7 +59,7 @@
         },
         "external-self": {
             "class": "SelfIp",
-            "address": "10.1.20.6/24",
+            "address": "10.1.20.7/24",
             "vlan": "external",
             "allowService": "none",
             "trafficGroup": "traffic-group-local-only"
