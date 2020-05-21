@@ -18,7 +18,7 @@ control "DNS" do
   impact 1.0
   title "Test that the correct DNS name servers were set"
 
-  describe command("list sys dns name-servers") do
+  describe command("tmsh list sys dns name-servers") do
     its("stdout") { should include "8.8.8.8"}
     its("stdout") { should include "8.8.4.4"}
   end
@@ -39,7 +39,7 @@ control "External VLAN Interface" do
   impact 1.0
   title "Test that the correct interface is set for the external VLAN"
 
-  describe command("tmsh list net vlan internal interfaces") do
+  describe command("tmsh list net vlan external interfaces") do
     its("stdout") { should include "1.2"}
   end
 end
