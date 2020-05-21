@@ -168,7 +168,7 @@ Now that the BIG-IP1 and BIG-IP2 ATC and FAST extension tests have passed, it's 
     for i in {6..7}
     do  
         docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.$i --user admin --password $bigip_pwd
-        docker exec -it f5-cli f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/bigip$counter.do.json
+        docker exec -it f5-cli f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/labs/lab0/bigip$counter.do.json
         counter++
     done
     ```
