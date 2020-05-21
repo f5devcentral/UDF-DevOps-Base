@@ -59,7 +59,7 @@ control "External Self IP" do
   impact 1.0
   title "Test that the correct IP is assigned to the self-ip"
 
-  describe command("list net self external-self address") do
+  describe command("tmsh list net self external-self address") do
     its("stdout") { should include input(external_sip)}
   end
 end
@@ -69,7 +69,7 @@ control "Bash Shell" do
   impact 1.0
   title "Test that the correct shell is set for the admin user"
 
-  describe command("list auth user admin shell") do
+  describe command("tmsh list auth user admin shell") do
     its("stdout") { should include "bash"}
   end
 end
@@ -80,7 +80,7 @@ control "GUI Banner" do
   impact 1.0
   title "Test that the GUI Advisory Banner is set"
 
-  describe command("list sys db ui.advisory.enabled") do
+  describe command("tmsh list sys db ui.advisory.enabled") do
     its("stdout") { should include "true"}
   end
 end
