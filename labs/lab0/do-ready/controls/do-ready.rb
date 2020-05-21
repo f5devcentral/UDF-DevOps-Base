@@ -3,10 +3,15 @@
 title "Declarative Onboarding Ready"
 
 # Check DNS
-control "DNS Configured" do
+control "Declarative Onboarding Ready" do
   impact 1.0
-  title "DNS Set to 8.8.8.8 and 8.8.4.4"
-  desc "Ensure that the correct DNS is set"
+  title "Test that DO configured the BIG-IP"
+  desc "Ensure that the correct BIG-IP settings were made"
+
+  describe command("tmsh list sys provision level | grep nominal -B2") do
+    its("stdout") { should include "ltm"}
+    its("stdout") { should include "gtm"}
+  end
 
   describe command("tmsh show sys ip-address") do
     its("stdout") { should include "8.8.8.8"}
