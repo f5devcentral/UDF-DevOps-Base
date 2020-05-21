@@ -136,21 +136,30 @@ Now that the BIG-IP1 and BIG-IP2 ATC and FAST extension tests have passed, it's 
 
     Open the _bigip1.do.json_ declaration and examine the onboarding settings.  Some settings to note:
 
-        * how the hostname is set
-        * how the name servers are set
-        * how BIG-IP modules are provisioned
-        * how VLANS and Self-IPs are configured
+      * how the hostname is set
+      * how the name servers are set
+      * how BIG-IP modules are provisioned
+      * how VLANS and Self-IPs are configured
 
 2. Add a Default User Shell
+
     While the provided DO declaration is a good starting point, it is missing one important configuration that allows us to run InSpec tests against the BIG-IP.  The admin use needs to have a bash shell instead of the default TMSH shell. 
 
-    For this step, I want you to use the [Declarative Onboarding][DO] documentation located on [clouddocs.f5.com](https://clouddocs.f5.com) to set the admin user's default shell to bash.
+    2.1. For this step, I want you to use the [Declarative Onboarding][DO] documentation located on [clouddocs.f5.com](https://clouddocs.f5.com) to set the admin user's default shell to bash.
 
-    > **Hint:** The DO schema object you need to add is _User_
+      > **Hint:** The DO schema object you need to add is _User_
+
+    2.2. When you're ready to test your solution run the following command:
+    
+      > **Note:** the test should output true for each declaration
+
+      ```bash
+      bash check_my_answer.sh
+      ``` 
 
     If you are stuck on this exercise, there is an example<sup>[1](#doexample)</sup> in the [Declarative Onboarding][DO] documentation.
 
-    Once you have updated the admin user's default shell in both _bigip1.do.json_ and _bigip2.do.json_ files you are ready to proceed to the next step. 
+    Once you have updated the admin user's default shell in both _bigip1.do.json_ and _bigip2.do.json_ files and the test script passes you are ready to proceed to the next step. 
 
 3. Onboard BIG-IP1 and BIG-IP1:
 
