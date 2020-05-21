@@ -24,4 +24,63 @@ control "DNS" do
   end
 end
 
+# Check VLANs
+control "Internal VLAN Interface" do
+  impact 1.0
+  title "Test that the correct interface is set for the internal VLAN"
 
+  describe command("list net vlan internal interfaces") do
+    its("stdout") { should include "1.1"}
+  end
+end
+
+
+control "External VLAN Interface" do
+  impact 1.0
+  title "Test that the correct interface is set for the external VLAN"
+
+  describe command("list net vlan internal interfaces") do
+    its("stdout") { should include "1.2"}
+  end
+end
+
+# Check Self-IP subnets
+control "Internal Self IP subnet" do
+  impact 1.0
+  title "Test that the correct subnet is assigned to the self-ip"
+
+  describe command("list net self internal-self address") do
+    its("stdout") { should include "10.1.10"}
+  end
+end
+
+
+control "External Self IP subnet" do
+  impact 1.0
+  title "Test that the correct subnet is assigned to the self-ip"
+
+  describe command("list net self external-self address") do
+    its("stdout") { should include "10.1.20"}
+  end
+end
+
+# Admin Bash Shell
+control "Bash Shell" do
+  impact 1.0
+  title "Test that the correct shell is set for the admin user"
+
+  describe command("list auth user admin shell") do
+    its("stdout") { should include "bash"}
+  end
+end
+
+
+# GUI Banner
+control "GUI Banner" do
+  impact 1.0
+  title "Test that the GUI Advisory Banner is set"
+
+  describe command("list sys db ui.advisory.enabled") do
+    its("stdout") { should include "true"}
+  end
+end
