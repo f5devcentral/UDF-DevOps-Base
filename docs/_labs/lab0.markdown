@@ -1,7 +1,7 @@
 ---
 name: Lab0
 title: Lab0 - Initial Setup
-description: Initial setup of the UDF deployment
+description: Initial setup of the UDF deployment.  In this lab you will install the F5 Automation Toolchain (ATC) and F5 Application Service Templates (FAST) extensions.  Next, you will onboard the BIG-IP using the F5-CLI and Declarative Onboarding. 
 layout: page
 tags: 
     - f5-cli
@@ -17,14 +17,21 @@ tags:
 4. Open a new [terminal](https://code.visualstudio.com/docs/editor/integrated-terminal) in VS Code
 5. Start the F5 CLI Docker container and make sure it's running
     
-        docker start f5-cli
-        docker ps
+    ```bash 
+    docker start f5-cli
+    docker ps
+    ```
+
+    You should now see a container named _f5-cli_ with an image source of _f5devcentral/f5-cli:latest_
 
 6. Set the BIG-IP password as an environment variable:
 
     > **_NOTE:_** Obtain the BIG-IP password on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
         
-        export bigip_pwd=replaceme
+    ```bash
+    export bigip_pwd=replaceme
+    ```
+
 7. Fork the UDF-Devops-Base repository
 
     The labs for this UDF blueprint can be found on [GitHub](https://github.com/F5SolutionsEngineering/UDF-DevOps-Base).  You will need to fork this repository into your own GitHub environmnent. 
@@ -37,17 +44,19 @@ tags:
 
     ```bash
     cd ~/projects
+
+    # replace your GitHub username
+    git clone https://github.com/<githubusername>/UDF-DevOps-Base.git
     ```
 
 9. Get Latest Version of the Lab
+
+    The labs in the UDF-DevOps-Base repository are constantly being updated and new labs are being added.  If it has been awhile since you forked the repository then now is a good time to update your local copy:
+
     ```bash
     git remote add upstream https://github.com/F5SolutionsEngineering/UDF-DevOps-Base.git
     git fetch upstream
     git merge upstream/master
-    ```
-
-    # replace your GitHub username
-    git clone https://github.com/<githubusername>/UDF-DevOps-Base.git
     ```
 
 9. Change into the Lab0 directory:
@@ -73,10 +82,11 @@ In preperation for further labs we need to install the F5 Automation Toolchain a
 
 2. Install ATC on BIG-IP1 and BIG-IP2:
 
+    The client machine has the F5-CLI docker container installed.  We will use this container to install and interact with the 
+
     > **Note**: If the F5-CLI Docker container is not running, start it with the 'docker start f5-cli' command
     
     ```bash
-    docker start f5-cli
     for in in {6..7} 
     do
         docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.$i --user admin --password $bigip_pwd
@@ -106,6 +116,8 @@ In preperation for further labs we need to install the F5 Automation Toolchain a
 ## Test the ATC and FAST Extensions
 An important, but often overlooked, part of automation is the creation of test cases to ensure the automation achieved the desired outcome. In this lab, we will leverage the Chef [InSpec][InSpec] tool.  InSpec is based on Ruby and provides a framework to test infrastructure deployed in a public or private cloud.
 
+> **Note:** You should see the InSpec test run twice, once for each BIG-IP, and all tests should be green.
+
 ```bash
 cd ~/projects/UDF-DevOps-Base/labs/lab0
 for i in {6..7} 
@@ -118,34 +130,45 @@ done
 
 ## Onboard the BIG-IP
 
-1. Onboard BIG-IP1
-    1.1. authenticate the F5-CLI against BIG-IP1:
-        
-        docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
+Now that the BIG-IP1 and BIG-IP2 ATC and FAST extension tests have passed, it's time to perform the onboarding steps.  To onboard the BIG-IP appliances we will leverage the F5 Automation Toolchain's [Declarative Onboarding][DO] extension.
 
-    1.2. verify the Declarative Onboarding installation:
-        
-        docker exec -it f5-cli f5 bigip extension do verify
+1. Examine the DO declaration
 
-    1.3. configure DO for BIG-IP1:
-        
-        docker exec -it f5-cli f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/bigip1.do.json
+    Open the _bigip1.do.json_ declaration and examine the onboarding settings.  Some settings to note:
 
-2. Onboard BIG-IP2
+        * how the hostname is set
+        * how the name servers are set
+        * how BIG-IP modules are provisioned
+        * how VLANS and Self-IPs are configured
 
-    2.1. authenticate the F5-CLI against BIG-IP1:
-        
-        docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.7 --user admin --password $bigip_pwd
+2. Add a Default User Shell
+    While the provided DO declaration is a good starting point, it is missing one important configuration that allows us to run InSpec tests against the BIG-IP.  The admin use needs to have a bash shell instead of the default TMSH shell. 
 
-    2.2. verify the Declarative Onboarding installation:
-        
-        docker exec -it f5-cli f5 bigip extension do verify
+    For this step, I want you to use the [Declarative Onboarding][DO] documentation located on [clouddocs.f5.com](https://clouddocs.f5.com) to set the admin user's default shell to bash.
 
-    2.3. configure DO for BIG-IP2:
-        
-        docker exec -it f5-cli f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/bigip2.do.json
+    > **Hint:** The DO schema object you need to add is _User_
 
+    If you are stuck on this exercise, there is an example<sup>[1](#doexample)</sup> in the [Declarative Onboarding][DO] documentation.
 
-## Testing
+    Once you have updated the admin user's default shell in both _bigip1.do.json_ and _bigip2.do.json_ files you are ready to proceed to the next step. 
 
-Your BIG-IPs are now ready to accept AS3 declarations.
+3. Onboard BIG-IP1 and BIG-IP1:
+
+    ```bash
+    counter=1
+    for i in {6..7}
+    do  
+        docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.$i --user admin --password $bigip_pwd
+        docker exec -it f5-cli f5 bigip extension do create --declaration /f5-cli/projects/UDF-DevOps-Base/declarations/bigip$counter.do.json
+        counter++
+    done
+    ```
+
+4. Test the Onboarding Process
+
+[DO]: https://clouddocs.f5.com/products/extensions/f5-declarative-onboarding/latest/
+
+---
+
+#### Footnotes:
+<small><a name="doexample">1</a>: Declarative Onboarding example of setting the admin users shell can be found [here](https://clouddocs.f5.com/products/extensions/f5-declarative-onboarding/latest/bigip-examples.html?highlight=bash#standalone-declaration).  Note, you do not need the password attribute from this example. <small>
