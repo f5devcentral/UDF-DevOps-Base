@@ -50,7 +50,7 @@ control "Internal Self IP" do
   title "Test that the correct subnet is assigned to the self-ip"
 
   describe command("tmsh list net self internal-self address") do
-    its("stdout") { should include input(internal_sip)}
+    its("stdout") { should include input("internal_sip")}
   end
 end
 
@@ -60,7 +60,7 @@ control "External Self IP" do
   title "Test that the correct IP is assigned to the self-ip"
 
   describe command("tmsh list net self external-self address") do
-    its("stdout") { should include input(external_sip)}
+    its("stdout") { should include input("external_sip")}
   end
 end
 
