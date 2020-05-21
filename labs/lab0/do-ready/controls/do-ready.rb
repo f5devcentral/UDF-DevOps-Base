@@ -9,8 +9,8 @@ control "DNS Configured" do
   desc "Ensure that the correct DNS is set"
 
   describe command("tmsh show sys ip-address") do
-    its("stdout") { should contain "8.8.8.8"}
-    its("stdout") { should contain "8.8.4.4"}
+    its("stdout") { should include "8.8.8.8"}
+    its("stdout") { should include "8.8.4.4"}
   end
 end
 
