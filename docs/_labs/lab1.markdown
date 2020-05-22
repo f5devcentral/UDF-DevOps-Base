@@ -22,7 +22,7 @@ using the new [F5 CLI][F5 CLI].  The purpose of this lab is to demonstrate how t
 
 ## Environment
 
-In this lab we will deploy an HTTP application on the F5 BIG-IP.  This lab will
+In this lab, we will deploy an HTTP application on the F5 BIG-IP.  This lab will
 leverage the following components and tools:
 
 * [F5 BIG-IP][F5 BIG-IP]

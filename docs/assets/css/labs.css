@@ -1,3 +1,13 @@
+@media only screen and (max-width: 1026px) {
+    #toc {
+        display: none;
+    }
+}
+
+#lab_banner h1 {
+    line-height: 0.2em;
+}
+
 #lab_banner img {
     border-radius: 50%;
 }
@@ -7,9 +17,9 @@
 }
 
 #toc {
-    position: absolute;
+    position: fixed;
     left: 50px;
-    top: 190px;
+    top: 150px;
     width: 200px;
     font-size: small;
     word-wrap: break-word;
@@ -19,7 +29,11 @@
     list-style-type: decimal;
 }
 
-/* #content {
-    float: left;
-    width: 75%;
-} */
+#content .highlight {
+    background-color: #e4e4e4;
+}
+
+#content code {
+    background-color: #e4e4e4;
+    color: #062873;
+}

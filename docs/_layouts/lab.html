@@ -6,23 +6,26 @@
 
 <body>
     {%- include header.html -%}
-
     <main class="page-content" aria-label="Content">
         <div class="wrapper">
             <div id="lab_banner">
                 <h1>{{ page.title }}</h1>
                 <small>{{ page.edit_date }} - lab time: {{ page.lab_time }} -</small>
-                {% for contributor in site.github.contributors %}
-                <img src="{{ contributor.avatar_url }}&size=24" />
-                {% endfor %}
-                <small class="edit_gh"><a
-                        href="{{ site.github.repository_url }}/blob/master/docs/{{ page.relative_path }}">edit
-                        on
-                        GitHub</a></small>
+                <a href="{{ site.github.repository_url }}/blob/master/docs/{{ page.relative_path }}">
+                    {% for contributor in site.github.contributors %}
+                    <img src="{{ contributor.avatar_url }}&size=24" />
+                    {% endfor %}
+                </a>
             </div>
             <div id="toc">
                 Sections:
-                {% include toc.html html=content %}
+                <!-- {% include toc.html html=content %} -->
+                {% include toc.html html=content h_min=2 h_max=2 %}
+
+                <hr />
+                <br />
+                Enhancements: <br />
+                <a href="{{ site.github.repository_url }}/blob/master/docs/{{ page.relative_path }}">edit on GitHub</a>
             </div>
             <div id="content">
                 {{ content }}

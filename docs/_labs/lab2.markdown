@@ -225,7 +225,7 @@ So far, we have created two HTTP applications using Jinaj2 and AS3.  However, if
 
 ## Testing
 
-For testing we will use Chef InSpec_.
+For testing, we will use Chef [InSpec][InSpec].
 This tool is commonly used in automated deployments and offers
 a wide variety of both infrastructure and application testing options.
 
