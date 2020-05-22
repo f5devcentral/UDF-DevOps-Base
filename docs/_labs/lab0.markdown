@@ -2,7 +2,9 @@
 name: Lab0
 title: Lab0 - Initial Setup
 description: Initial setup of the UDF deployment.  In this lab you will install the F5 Automation Toolchain (ATC) and F5 Application Service Templates (FAST) extensions.  Next, you will onboard the BIG-IP using the F5-CLI and Declarative Onboarding. 
-layout: page
+layout: lab
+edit_date: 05/21/2020
+lab_time: 20 mins
 tags: 
     - f5-cli
     - DO
@@ -221,5 +223,3 @@ You have successfully completed Lab0 and your environment is now ready to run ot
 
 #### Footnotes:
 <small><a name="doexample">1</a>: Declarative Onboarding example of setting the admin users shell can be found [here](https://clouddocs.f5.com/products/extensions/f5-declarative-onboarding/latest/bigip-examples.html?highlight=bash#standalone-declaration).  Note, you do not need the password attribute from this example. <small>
-
-[Edit on GitHub]({{ site.github.repository_url }}/blob/master/{{ page.relative_path }})

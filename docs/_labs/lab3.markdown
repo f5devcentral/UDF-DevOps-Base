@@ -2,7 +2,9 @@
 name: Lab3
 title: Lab3 - F5 Application Service Templates
 description: F5 Application Services Templates (FAST) are an easy and effective way to deploy applications on the BIG-IP system using AS3. The FAST Extension provides a toolset for templating and managing AS3 Applications on BIG-IP.
-layout: page
+layout: lab
+edit_date: 05/21/2020
+lab_time: 20 mins
 tags: 
     - fast
     - AS3
@@ -50,7 +52,7 @@ FAST provides some default templates to get you started:
 * UDP
 * Simple WAF
 
-In this lab we will take a look at the HTTP templates. 
+In this lab, we will take a look at the HTTP templates. 
 
 1. Create _lab3a.json_, this will be our POST payload:
   ```json
@@ -108,7 +110,7 @@ Congratulations, you have now deployed your first FAST application!!
 One of the advantages FAST templates have over native AS3 is that FAST manages compiling all the applications of a tenant together when building the AS3 declaration.  For customers that are new to automation, FAST provides an ideal starting point.  We'll take a look at this in the next section.
 
 ## Deploy Our Second Application
-A unique features of FAST is that it treats each application separately, and it will handle stitching everything together to build a proper AS3 declaration.  
+A unique feature of FAST is that it treats each application separately, and it will handle stitching everything together to build a proper AS3 declaration.  
 
 In this exercise, we will deploy our second application on port 8080.
 

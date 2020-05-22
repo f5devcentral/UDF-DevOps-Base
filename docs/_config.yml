@@ -29,6 +29,7 @@ url: "https://f5solutionsengineering.github.io/" # the base hostname & protocol 
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-github-metadata
 
 titles_from_headings:
   enabled: true

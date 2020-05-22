@@ -1,0 +1,42 @@
+@media only screen and (max-width: 1026px) {
+    #toc {
+        display: none;
+    }
+}
+
+#lab_banner h1 {
+    line-height: 0.2em;
+}
+
+#lab_banner img {
+    border-radius: 50%;
+}
+
+#lab_banner .edit_gh {
+    text-align: right;
+}
+
+#toc {
+    position: fixed;
+    left: 50px;
+    top: 150px;
+    width: 200px;
+    font-size: small;
+    word-wrap: break-word;
+}
+
+#content .highlight {
+    background-color: #e4e4e4;
+}
+
+#content code {
+    background-color: #e4e4e4;
+    color: #062873;
+}
+
+button {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    clear: right;
+}

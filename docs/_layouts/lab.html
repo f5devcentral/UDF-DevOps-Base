@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+{%- include head.html -%}
+<link rel="stylesheet" href="{{ "/assets/css/labs.css" | relative_url }}">
+
+<body>
+    {%- include header.html -%}
+    <main class="page-content" aria-label="Content">
+        <div class="wrapper">
+            <div id="lab_banner">
+                <h1>{{ page.title }}</h1>
+                <small>{{ page.edit_date }} - lab time: {{ page.lab_time }} -</small>
+                <a href="{{ site.github.repository_url }}/blob/master/docs/{{ page.relative_path }}">
+                    {% for contributor in site.github.contributors %}
+                    <img src="{{ contributor.avatar_url }}&size=24" />
+                    {% endfor %}
+                </a>
+            </div>
+            <div id="toc">
+                Sections:
+                <!-- {% include toc.html html=content %} -->
+                {% include toc.html html=content ordered=true h_min=2 h_max=2 %}
+
+                <br />
+                <a href="{{ site.github.repository_url }}/blob/master/docs/{{ page.relative_path }}">Edit on GitHub</a>
+            </div>
+            <div id="content">
+                {{ content }}
+            </div>
+        </div>
+    </main> {%- include footer.html -%}
+
+    <script src="https://kit.fontawesome.com/539925ee6e.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    <script>
+        $("pre > code").each(function (i) {
+
+            var _this = $(this);
+            i = ++i;
+
+            // Add the id
+            _this.attr('id', 'code-snippet-' + i);
+
+            // Create the button
+            var button = '<button class="btn" data-clipboard-target="#code-snippet-' + i +
+                '"><i class="far fa-copy"></i> Copy</button>';
+            $(button).insertAfter(_this);
+
+        });
+
+        // Trigger Clipboard.js
+        new ClipboardJS('.btn');
+    </script>
+</body>
+
+</html>
