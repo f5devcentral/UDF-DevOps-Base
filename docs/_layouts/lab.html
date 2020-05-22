@@ -20,17 +20,40 @@
             <div id="toc">
                 Sections:
                 <!-- {% include toc.html html=content %} -->
-                {% include toc.html html=content h_min=2 h_max=2 %}
+                {% include toc.html html=content ordered=true h_min=2 h_max=2 %}
 
-                <hr />
                 <br />
-                Enhancements: <br />
-                <a href="{{ site.github.repository_url }}/blob/master/docs/{{ page.relative_path }}">edit on GitHub</a>
+                <a href="{{ site.github.repository_url }}/blob/master/docs/{{ page.relative_path }}">Edit on GitHub</a>
             </div>
             <div id="content">
                 {{ content }}
             </div>
         </div>
-    </main> {%- include footer.html -%} </body>
+    </main> {%- include footer.html -%}
+
+    <script src="https://kit.fontawesome.com/539925ee6e.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    <script>
+        $("pre > code").each(function (i) {
+
+            var _this = $(this);
+            i = ++i;
+
+            // Add the id
+            _this.attr('id', 'code-snippet-' + i);
+
+            // Create the button
+            var button = '<button class="btn" data-clipboard-target="#code-snippet-' + i +
+                '"><i class="far fa-copy"></i> Copy</button>';
+            $(button).insertAfter(_this);
+
+        });
+
+        // Trigger Clipboard.js
+        new ClipboardJS('.btn');
+    </script>
+</body>
 
 </html>
