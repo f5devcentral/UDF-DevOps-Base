@@ -89,7 +89,7 @@ In preperation for further labs we need to install the F5 Automation Toolchain a
     > **Note**: If the F5-CLI Docker container is not running, start it with the 'docker start f5-cli' command
     
     ```bash
-    for in in {6..7} 
+    for i in {6..7} 
     do
         # authenticate to the BIG-IP
         docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.$i --user admin --password $bigip_pwd
@@ -143,7 +143,7 @@ cd ~/projects/UDF-DevOps-Base/labs/lab0
 for i in {6..7} 
 do
     inspec exec https://github.com/F5SolutionsEngineering/big-ip-atc-ready.git \
-    --input bigip_address=10.1.1.6 password=$bigip_pwd do_version=$do_version \
+    --input bigip_address=10.1.1.$i password=$bigip_pwd do_version=$do_version \
     as3_version=$as3_version ts_version=$ts_version fast_version=$fast_version
 done
 ```
@@ -163,7 +163,7 @@ Now that the BIG-IP1 and BIG-IP2 ATC and FAST extension tests have passed, it's 
 
 2. Add a Default User Shell
 
-    While the provided DO declaration is a good starting point, it is missing one important configuration that allows us to run InSpec tests against the BIG-IP.  The admin use needs to have a bash shell instead of the default TMSH shell. 
+    While the provided DO declaration is a good starting point, it is missing one important configuration that allows us to run InSpec tests against the BIG-IP.  The admin user needs to have a bash shell instead of the default TMSH shell. 
 
     2.1. For this step, I want you to use the [Declarative Onboarding][DO] documentation located on [clouddocs.f5.com](https://clouddocs.f5.com) to set the admin user's default shell to bash.
 
