@@ -23,7 +23,7 @@ title: UDF DevOps Base
 description: >- # this means to ignore newlines until "baseurl:"
   This GitHub page provides information about the repositories hosted within the F5 Solutions Engineering organization.
 baseurl: "/UDF-DevOps-Base" # the subpath of your site, e.g. /blog
-url: "https://f5solutionsengineering.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://f5solutionsengineering.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb
 # github_username: f5solutionsengineering
 
