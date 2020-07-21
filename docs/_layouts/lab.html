@@ -13,7 +13,7 @@
                 <small>{{ page.edit_date }} - lab time: {{ page.lab_time }} -</small>
                 <a href="{{ site.github.repository_url }}/blob/master/docs/{{ page.relative_path }}">
                     {% for contributor in site.github.contributors %}
-                    <img src="{{ contributor.avatar_url }}&size=24" />
+                    <img src="{{ contributor.avatar_url }}&size=24" height="24" width="24" />
                     {% endfor %}
                 </a>
             </div>
