@@ -51,7 +51,13 @@ tags:
     git clone https://github.com/<githubusername>/UDF-DevOps-Base.git
     ```
 
-9. Get Latest Version of the Lab
+9. Change into the Lab0 directory:
+
+    ```bash
+    cd ~/projects/UDF-DevOps-Base/labs/lab0
+    ```
+
+10. Get Latest Version of the Lab
 
     The labs in the UDF-DevOps-Base repository are constantly being updated and new labs are being added.  If it has been awhile since you forked the repository then now is a good time to update your local copy:
 
@@ -59,12 +65,6 @@ tags:
     git remote add upstream https://github.com/F5SolutionsEngineering/UDF-DevOps-Base.git
     git fetch upstream
     git merge upstream/master
-    ```
-
-9. Change into the Lab0 directory:
-
-    ```bash
-    cd ~/projects/UDF-DevOps-Base/labs/lab0
     ```
 
 ## Install BIG-IP ATC and FAST extension
