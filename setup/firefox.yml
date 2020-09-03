@@ -1,0 +1,14 @@
+---
+- hosts: client
+  become: yes
+  tasks:
+    - name: Pull Firefox
+      docker_image:
+        name: "jlesage/firefox"
+        source: pull
+        
+    - name: Create Firefox
+      docker_container:
+        name: firefox
+        image: jlesage/firefox
+        state: started

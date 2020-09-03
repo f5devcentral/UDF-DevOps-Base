@@ -1,5 +1,5 @@
 ---
-- hosts: app
+- hosts: app, client
   become: yes
   tasks:
     - name: Install aptitude using apt
@@ -25,29 +25,3 @@
     - name: Install Docker Module for Python
       pip:
         name: docker
-
-    - name: Pull NGINX Demo
-      docker_image:
-        name: "nginxdemos/hello"
-        source: pull
-    
-    - name: Pull JuiceShop
-      docker_image:
-        name: "bkimminich/juice-shop"
-        source: pull
-
-    - name: Create NGINX Demo
-      docker_container:
-        name: nginx_hello
-        image: nginxdemos/hello
-        state: started
-        ports:
-          - "8080:80"
-    
-    - name: Create JuiceShop
-      docker_container:
-        name: juiceshop
-        image: bkimminich/juice-shop
-        state: started
-        ports:
-          - "3000:3000"

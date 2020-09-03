@@ -1,0 +1,14 @@
+---
+- hosts: client
+  become: yes
+  tasks:
+    - name: Pull F5 CLI
+      docker_image:
+        name: "f5devcentral/f5-cli"
+        source: pull
+        
+    - name: Create F5 CLI
+      docker_container:
+        name: f5-cli
+        image: f5devcentral/f5-cli
+        state: started

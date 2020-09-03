@@ -1,0 +1,16 @@
+---
+- hosts: app
+  become: yes
+  tasks:
+    - name: Pull JuiceShop
+      docker_image:
+        name: "bkimminich/juice-shop"
+        source: pull
+        
+    - name: Create JuiceShop
+      docker_container:
+        name: juiceshop
+        image: bkimminich/juice-shop
+        state: started
+        ports:
+          - "3000:3000"
