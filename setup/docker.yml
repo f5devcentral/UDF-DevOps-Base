@@ -1,5 +1,5 @@
 ---
-- hosts: app, client
+- hosts: servers
   become: yes
   tasks:
     - name: Install required system packages

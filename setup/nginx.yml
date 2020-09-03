@@ -1,5 +1,5 @@
 ---
-- hosts: app
+- hosts: servers
   become: yes
   tasks:
     - name: ensure nginx is at the latest version

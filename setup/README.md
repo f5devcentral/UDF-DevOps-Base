@@ -28,15 +28,15 @@ EOF'
 
 ## Setup Ubuntu servers
 ```bash
-ansible-playbook --limit servers ubuntu.yml
+ansible-playbook ubuntu.yml
 ```
 
 ## Install NGINX
 ```bash
-ansible-playbook --limit servers nginx.yml
+ansible-playbook nginx.yml
 ```
 
 ## Install Docker
 ```bash
-ansible-playbook --limit servers docker.yml
+ansible-playbook docker.yml
 ```
