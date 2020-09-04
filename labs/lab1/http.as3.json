@@ -17,7 +17,7 @@
                 "serviceMain": {
                     "class": "Service_HTTP",
                     "virtualAddresses": [
-                        "10.1.20.20"
+                        "10.1.20.10"
                     ],
                     "pool": "web_pool"
                 },

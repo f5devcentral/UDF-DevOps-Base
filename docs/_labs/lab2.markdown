@@ -52,7 +52,7 @@ Ensure you have the latest version of the lab from GitHub then open the lab2 fol
 1. Create a YAML data file called _lab2a.yml_ in the lab2 directory:
 
     ```yaml
-    virtualAddresses: 10.1.20.20
+    virtualAddresses: 10.1.20.10
     serverAddresses: 10.1.10.5
     ```
 
@@ -89,10 +89,10 @@ To make our Jinja2 template a little more useful, we are going to introduce [Jin
 
     ```yaml
     virtualAddresses:
-        - 10.1.20.20
+        - 10.1.20.10
     serverAddresses:
         - 10.1.10.5
-        - 10.1.20.10
+        - 10.1.10.10
     ```
 
 2. Create the AS3 declaration using Jinja2
@@ -121,7 +121,7 @@ Now we will extend the Jinja2 template to support multiple applications under th
         - "10.1.10.10"
         servicePort: 80
         virtualAddresses: 
-        - "10.1.20.20"
+        - "10.1.20.10"
         virtualPort: 80
     - 
         name: test2.f5demos.com
@@ -130,7 +130,7 @@ Now we will extend the Jinja2 template to support multiple applications under th
         - "10.1.10.10"
         servicePort: 8080
         virtualAddresses: 
-        - "10.1.20.20"
+        - "10.1.20.10"
         virtualPort: 8080
     ```
 
@@ -163,7 +163,7 @@ So far, we have created two HTTP applications using Jinaj2 and AS3.  However, if
         - "10.1.10.10"
         servicePort: 80
         virtualAddresses: 
-        - "10.1.20.20"
+        - "10.1.20.10"
         virtualPort: 80
     - 
         name: test2.f5demos.com
@@ -173,7 +173,7 @@ So far, we have created two HTTP applications using Jinaj2 and AS3.  However, if
         - "10.1.10.10"
         servicePort: 8080
         virtualAddresses: 
-        - "10.1.20.20"
+        - "10.1.20.10"
         virtualPort: 8080
     ```
 
