@@ -1,0 +1,41 @@
+---
+- hosts: bigip
+  gather_facts: false
+  vars:
+    as3_version: 3.22.0-2
+    do_version: 1.15.0-3
+    f5app_services_package_server: "{{ hostvars[inventory_hostname].ansible_host }}"
+    f5app_services_package_user: admin
+    f5app_services_package_server_port: 443
+    f5app_services_package_password: "{{ lookup('env','BIGIP_PWD') }}"
+    f5app_services_package_validate_certs: false
+    f5app_services_package_transport: rest
+    f5app_services_package_state: "present"
+    provider:
+      server: "{{ f5app_services_package_server }}"
+      user: "{{ f5app_services_package_user }}"
+      password: "{{ f5app_services_package_password }}"
+      server_port: "{{ f5app_services_package_server_port }}"
+      validate_certs: false
+
+  tasks:
+    - name: Download and Install DO RPM sha check - url
+      include_role:
+        name: f5devcentral.f5app_services_package
+      vars:
+        f5app_services_package_url: https://github.com/F5Networks/f5-declarative-onboarding/releases/download/v{{ do_version[:-2] }}/f5-declarative-onboarding-{{ do_version }}.noarch.rpm
+        f5app_services_package_checksum_url: https://github.com/F5Networks/f5-declarative-onboarding/releases/download/v{{ do_version[:-2] }}/f5-declarative-onboarding-{{ do_version }}.noarch.rpm.sha256
+        f5app_services_package_path: /tmp/f5-declarative-onboarding-{{ do_version }}.noarch.rpm
+    - name: Download and Install AS3 RPM sha check - url
+      include_role:
+        name: f5devcentral.f5app_services_package
+      vars:
+        f5app_services_package_url: https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v{{ as3_version[:-2] }}/f5-appsvcs-{{ as3_version }}.noarch.rpm
+        f5app_services_package_checksum_url: https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v{{ as3_version[:-2] }}/f5-appsvcs-{{ as3_version }}.noarch.rpm.sha256
+        f5app_services_package_path: /tmp/f5-appsvcs-extension-{{ as3_version }}.noarch.rpm
+    - name: Onboard BIG-IP with base DO
+      include_role:
+        name: f5devcentral.atc_deploy
+      vars:
+        atc_method: post
+        atc_declaration_file: "../declarations/base.do.json"

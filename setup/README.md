@@ -31,12 +31,25 @@ EOF'
 ansible-playbook ubuntu.yml
 ```
 
-## Install NGINX
+## Install NGINX and docker
 ```bash
-ansible-playbook nginx.yml
+ansible-playbook nginx.yml docker.yml
 ```
 
-## Install Docker
+## Install Demo Apps
 ```bash
-ansible-playbook docker.yml
+ansible-playbook nginx_demo.yml juiceshop.yml
+```
+
+## Install Client Resources
+```bash
+ansible-playbook firefox.yml f5-cli.yml coder.yml
+```
+
+## Base configuration for BIG-IP
+```bash
+ansible-galaxy install f5devcentral.f5app_services_package
+ansible-galaxy install f5devcentral.atc_deploy
+export BIGIP_PWD=enter_your_bigip_pwd
+ansible-playbook bigip.yml
 ```

@@ -30,3 +30,7 @@
     - name: Update all packages to the latest version
       apt:
         upgrade: dist
+
+    # Install RPM
+    - name: Install rpm using apt
+      apt: name=rpm state=latest update_cache=yes force_apt_get=yes
