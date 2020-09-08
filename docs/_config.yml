@@ -23,7 +23,7 @@ author: F5 Networks Solutions Engineering
 description: >- # this means to ignore newlines until "baseurl:"
   This site provides information about the UDF DevOps Base blueprint and the various DevOps based labs you can run with it.
 baseurl: "/UDF-DevOps-Base" # the subpath of your site, e.g. /blog
-url: "https://f5devcentral.github.io/UDF-DevOps-Base" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://f5devcentral.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
 theme: minima
