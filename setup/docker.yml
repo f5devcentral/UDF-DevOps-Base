@@ -31,3 +31,9 @@
     - name: Install Docker Module for Python
       pip:
         name: docker
+
+    - name: add ubuntu to docker group
+      user:
+        name: ubuntu
+        append: yes
+        group: docker
