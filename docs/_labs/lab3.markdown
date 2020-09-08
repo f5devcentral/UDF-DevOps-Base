@@ -61,7 +61,7 @@ In this lab, we will take a look at the HTTP templates.
       "parameters": {
         "tenant_name": "demo",
         "app_name": "lab3a",
-        "virtual_address": "10.1.20.20",
+        "virtual_address": "10.1.20.10",
         "virtual_port": 80,
         "enable_pool": true, 
         "pool_members": ["10.1.10.5", "10.1.10.10"],
@@ -123,7 +123,7 @@ In this exercise, we will deploy our second application on port 8080.
     "parameters": {
       "tenant_name": "demo",
       "app_name": "lab3b",
-      "virtual_address": "10.1.20.20",
+      "virtual_address": "10.1.20.10",
       "virtual_port": 8080,
       "enable_pool": true, 
       "pool_members": ["10.1.10.5", "10.1.10.10"],

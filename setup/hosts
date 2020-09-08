@@ -1,0 +1,10 @@
+[servers]
+client ansible_host=10.1.1.4
+app ansible_host=10.1.1.1.5
+
+[bigip]
+bigip1 ansible_host=10.1.1.6
+bigip2 ansible_host=10.1.1.7
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3

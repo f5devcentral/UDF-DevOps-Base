@@ -1,0 +1,32 @@
+---
+- hosts: client
+  vars:
+    vscode_f5_fast_url: https://github.com/DumpySquare/vscode-f5-fast/releases/download/v2.2.0/vscode-f5-fast-2.2.0.vsix
+  become: true
+  tasks:
+    - name: Install Coder
+      shell: curl -fsSL https://code-server.dev/install.sh | sh
+      args:
+        warn: false
+    # Update systemctl configuration
+    - name: Change bind address
+      lineinfile:
+        path: /home/ubuntu/.config/code-server/config.yaml
+        regexp: "^bind-addr:"
+        line: "bind-addr: 0.0.0.0:8080"
+    - name: Change password setting
+      lineinfile:
+        path: /home/ubuntu/.config/code-server/config.yaml
+        regexp: "^auth:"
+        line: "auth: none"
+    # Install VS Code Extensions
+    - name: Download vscode-f5-fast
+      get_url:
+        url: "{{ vscode_f5_fast_url }}"
+        dest: /var/tmp/vscode-f5-fast.vsix
+        mode: "0444"
+    - name: install vscode-f5-fast extension
+      become_user: ubuntu
+      shell: code-server --install-extension /var/tmp/vscode-f5-fast.vsix
+    - name: Start the code-server
+      shell: systemctl enable --now code-server@\ubuntu

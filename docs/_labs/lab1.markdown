@@ -96,7 +96,7 @@ An important, but often overlooked, part of automation is the creation of test c
 
 ### Test that the deployment was successful
 
-  In this test, InSpec will check that the application at http://10.1.20.20 is accessible and contains the phrase "Hello World".
+  In this test, InSpec will check that the application at http://10.1.20.10 is accessible and contains the phrase "Hello World".
 
     cd ~/projects/UDF-DevOps-Base/labs/lab1
     inspec exec test/app
@@ -109,7 +109,7 @@ test environment.
 
 1. In the UDF Components list, Click the Access drop-down on the Client System
 2. Click FIREFOX
-3. In the Firefox browser, enter http://10.1.20.20 in the address bar
+3. In the Firefox browser, enter http://10.1.20.10 in the address bar
 
 You should now see the NGINX demo application.
 
