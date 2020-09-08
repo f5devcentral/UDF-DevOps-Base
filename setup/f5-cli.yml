@@ -16,6 +16,7 @@
         state: started
         volumes:
           - /home/ubuntu/.f5-cli:/root/.f5-cli
+          - /home/ubuntu:/f5-cli
         restart_policy: always
         interactive: yes
         tty: yes
