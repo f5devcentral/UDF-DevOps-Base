@@ -61,12 +61,11 @@ tags:
 ## Install BIG-IP ATC and FAST extension
 In preperation for further labs we need to install the F5 Automation Toolchain and the F5 Application Service Templates extensions.
 
-1. Set the BIG-IP password and ATC versions as an environment variables:
+1. Set the ATC versions as an environment variables:
 
     > **NOTE**: Obtain the BIG-IP password on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
 
     ```bash
-    export bigip_pwd=replaceme
     export as3_version=3.19.1
     export do_version=1.12.0
     export ts_version=1.11.0
