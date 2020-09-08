@@ -16,3 +16,4 @@
         ports:
           - "5800:5800"
         privileged: yes
+        restart_policy: always
