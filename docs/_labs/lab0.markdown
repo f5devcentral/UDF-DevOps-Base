@@ -17,16 +17,7 @@ tags:
     > **Note:** For more information on deploying a UDF blueprint, please reference the [UDF documentation](https://help.udf.f5.com/en/)
 3. Under components, click the access dropdown on the client system, then click VS CODE
 4. Open a new [terminal](https://code.visualstudio.com/docs/editor/integrated-terminal) in VS Code
-5. Start the F5 CLI Docker container and make sure it's running
-    
-    ```bash 
-    docker start f5-cli
-    docker ps
-    ```
-
-    You should now see a container named _f5-cli_ with an image source of _f5devcentral/f5-cli:latest_
-
-6. Set the BIG-IP password as an environment variable:
+5. Set the BIG-IP password as an environment variable:
 
     > **Note:** Obtain the BIG-IP password on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
         
@@ -34,13 +25,13 @@ tags:
     export bigip_pwd=replaceme
     ```
 
-7. Fork the UDF-Devops-Base repository
+6. Fork the UDF-Devops-Base repository
 
     The labs for this UDF blueprint can be found on [GitHub](https://github.com/f5devcentral/UDF-DevOps-Base).  You will need to fork this repository into your own GitHub environmnent. 
     
     For information on how to do this, please visit the [GitHub documentation page](https://help.github.com/en/github/getting-started-with-github/fork-a-repo#fork-an-example-repository).
 
-8. Checkout Forked Repository
+7. Checkout Forked Repository
 
     To conduct the labs, you will need to check our your forked version of the repository:
 
@@ -51,13 +42,13 @@ tags:
     git clone https://github.com/<githubusername>/UDF-DevOps-Base.git
     ```
 
-9. Change into the Lab0 directory:
+8. Change into the Lab0 directory:
 
     ```bash
     cd ~/projects/UDF-DevOps-Base/labs/lab0
     ```
 
-10. Get Latest Version of the Lab
+9. Get Latest Version of the Lab
 
     The labs in the UDF-DevOps-Base repository are constantly being updated and new labs are being added.  If it has been awhile since you forked the repository then now is a good time to update your local copy:
 
