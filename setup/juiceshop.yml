@@ -6,7 +6,7 @@
       docker_image:
         name: "bkimminich/juice-shop"
         source: pull
-        
+
     - name: Create JuiceShop
       docker_container:
         name: juiceshop
@@ -14,3 +14,4 @@
         state: started
         ports:
           - "3000:3000"
+        restart_policy: always

@@ -14,3 +14,4 @@
         state: started
         ports:
           - "8080:80"
+        restart_policy: always
