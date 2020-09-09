@@ -18,7 +18,7 @@ using the new [F5 CLI][F5 CLI].  The purpose of this lab is to demonstrate how t
 
 1. Access to the F5 Unified Demo Framework (UDF)
 2. Chrome browser
-3. Finished the Setup Process in the [UDF DevOps Base documentation][UDF DevOps Base documentation]
+3. Finished Lab0 or the Lab0 QuickStart [UDF DevOps Base documentation](lab0.markdown)
 
 ## Environment
 
@@ -123,7 +123,6 @@ This command leverages the Docker exec feature and tells the F5 CLI to target a 
 
 
 [F5 CLI]: https://clouddocs.f5.com/sdk/f5-cli/
-[UDF DevOps Base documentation]: https://udf-devops-base.readthedocs.io/en/latest/
 [F5 BIG-IP]: https://www.f5.com/products/big-ip-services/virtual-editions
 [F5 Automation Toolchain]: https://www.f5.com/products/automation-and-orchestration
 [InSpec]: https://www.inspec.io/
