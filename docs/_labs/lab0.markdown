@@ -132,7 +132,7 @@ An important, but often overlooked, part of automation is the creation of test c
 cd ~/projects/UDF-DevOps-Base/labs/lab0
 for i in {6..7} 
 do
-    inspec exec https://github.com/f5devcentral/big-ip-atc-ready.git \
+    inspec exec https://github.com/f5solutionsengineering/big-ip-atc-ready.git \
     --input bigip_address=10.1.1.$i password=$bigip_pwd do_version=$do_version \
     as3_version=$as3_version ts_version=$ts_version fast_version=$fast_version
 done
