@@ -74,6 +74,11 @@
             "ui.advisory.enabled": true,
             "ui.advisory.color": "green",
             "ui.advisory.text": "BIG-IP1"
+        },
+        "admin": {
+            "class": "User",
+            "userType": "regular",
+            "shell": "bash"
         }
     }
 }

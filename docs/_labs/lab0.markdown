@@ -9,6 +9,39 @@ tags:
     - f5-cli
     - DO
 ---
+## Quickstart 
+Use the steps below to bypass Lab 0. Otherwise, skip to the Setup section.
+1. SSH into the client instance (you can do this via the Access drop down in the UDF portal)
+2. Set the BIG-IP password:
+```bash
+export bigip_pwd=replaceme
+```
+3. Onboard the two BIG-IP virtual appliances:
+```bash
+COUNTER=1
+for i in {6..7}
+do  
+    # authenticate to the BIG-IP
+    docker exec -it f5-cli f5 login --authentication-provider bigip \
+    --host 10.1.1.$i --user admin --password $bigip_pwd
+
+    # POST the DO declaration
+    docker exec -it f5-cli f5 bigip extension do create --declaration \
+    /f5-cli/projects/UDF-DevOps-Base/labs/lab0/bigip$COUNTER.quickstart.do.json
+
+    # increment counter
+    let COUNTER=COUNTER+1
+done
+```
+4. Test that the BIG-IPs are ready:
+```bash
+for i in {6..7}
+do
+    inspec exec do-ready -t ssh://admin@10.1.1.$i --password=$bigip_pwd \
+    --input internal_sip=$10.1.10.$i external_sip=10.1.20.$i 
+done
+```
+
 ## Setup
 
 1. Log in to the [Unified Demo Framework Portal](https://udf.f5.com)
@@ -132,7 +165,7 @@ An important, but often overlooked, part of automation is the creation of test c
 cd ~/projects/UDF-DevOps-Base/labs/lab0
 for i in {6..7} 
 do
-    inspec exec https://github.com/f5devcentral/big-ip-atc-ready.git \
+    inspec exec https://github.com/f5solutionsengineering/big-ip-atc-ready.git \
     --input bigip_address=10.1.1.$i password=$bigip_pwd do_version=$do_version \
     as3_version=$as3_version ts_version=$ts_version fast_version=$fast_version
 done

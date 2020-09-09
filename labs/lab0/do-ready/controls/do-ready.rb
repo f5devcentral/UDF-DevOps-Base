@@ -9,7 +9,6 @@ control "Provisioning" do
 
   describe command("tmsh list sys provision level | grep nominal -B2") do
     its("stdout") { should include "ltm"}
-    its("stdout") { should include "gtm"}
   end
 end
 
