@@ -12,7 +12,7 @@ tags:
 ## Overview
 
 In this demo, we will deploy applications to the F5 BIG-IP
-using the new [F5 CLI][F5 CLI].  The purpose of this lab is to demonstrate how to leverage the F5 Automation Toolchain without the need for a complementing tool like Ansible. 
+using the new [F5 CLI][F5 CLI].  This lab demonstrates how to leverage the F5 Automation Toolchain without tools like Ansible. 
 
 ## Prerequisites
 
