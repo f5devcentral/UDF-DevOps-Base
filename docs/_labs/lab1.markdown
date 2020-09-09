@@ -33,15 +33,17 @@ leverage the following components and tools:
 ## Setup
 
 1. Ensure you have the latest version of the code from GitHub
-
-        cd ~/projects/UDF-DevOps-Base
-        git pull
-        cd labs/lab1
+    ```bash
+    cd ~/projects/UDF-DevOps-Base
+    git remote add upstream https://github.com/f5devcentral/UDF-DevOps-Base.git
+    git fetch upstream
+    git merge upstream/main
+    cd labs/lab1
+    ```
 
 2. Set the BIG-IP password as an environment variable:
 
     > **NOTE**: Obtain the BIG-IP password on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
-
         export bigip_pwd=replaceme
 
 3. login to the BIG-IP (using the F5-CLI container)
