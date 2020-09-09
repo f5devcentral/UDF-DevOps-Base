@@ -3,7 +3,7 @@ name: Lab0
 title: Lab0 - Initial Setup
 description: Initial setup of the UDF deployment.  In this lab you will install the F5 Automation Toolchain (ATC) and F5 Application Service Templates (FAST) extensions.  Next, you will onboard the BIG-IP using the F5-CLI and Declarative Onboarding. 
 layout: lab
-edit_date: 05/21/2020
+edit_date: 09/09/2020
 lab_time: 20 mins
 tags: 
     - f5-cli

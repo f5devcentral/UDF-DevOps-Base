@@ -33,6 +33,9 @@ The UDF blueprint consists of the following resources:
 
 View the [lab documentation](https://f5devcentral.github.io/UDF-DevOps-Base/).
 
+## Development:
+View the [development overview](development.md) page.
+
 ## Support
 For support, please open a GitHub issue.  Note, the code in this repository is community supported and is not supported by F5 Networks.  For a complete list of supported projects please reference [SUPPORT.md](support.md).
 
