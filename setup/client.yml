@@ -1,0 +1,19 @@
+---
+- hosts: client
+  any_errors_fatal: true
+  roles:
+    - role: mrlesmithjr.netplan
+      become: yes
+      netplan_enabled: true
+      netplan_config_file: /etc/netplan/60-netcfg.yaml
+      netplan_renderer: networkd
+      netplan_configuration:
+        network:
+          version: 2
+          ethernets:
+            ens6:
+              addresses:
+                - 10.1.10.4/24
+            ens7:
+              addresses:
+                - 10.1.20.4/24

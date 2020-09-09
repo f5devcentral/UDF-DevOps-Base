@@ -28,7 +28,9 @@ EOF'
 
 ## Setup Ubuntu servers
 ```bash
-ansible-playbook ubuntu.yml
+ansible-galaxy install mrlesmithjr.netplan 
+ansible-playbook ubuntu.yml app.yml client.yml
+
 ```
 
 ## Install NGINX and docker
