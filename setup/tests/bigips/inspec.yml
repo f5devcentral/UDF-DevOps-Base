@@ -1,0 +1,5 @@
+name: bigips
+depends:
+- name: big-ip-atc-ready
+  git: https://github.com/F5SolutionsEngineering/big-ip-atc-ready
+  branch:  master
