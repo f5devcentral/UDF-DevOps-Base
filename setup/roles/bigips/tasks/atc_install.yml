@@ -14,3 +14,19 @@
     f5app_services_package_url: https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v{{ as3_version[:-2] }}/f5-appsvcs-{{ as3_version }}.noarch.rpm
     f5app_services_package_checksum_url: https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v{{ as3_version[:-2] }}/f5-appsvcs-{{ as3_version }}.noarch.rpm.sha256
     f5app_services_package_path: /tmp/f5-appsvcs-extension-{{ as3_version }}.noarch.rpm
+- name: Download and Install AS3 RPM sha check - url
+  include_role:
+    name: f5devcentral.f5app_services_package
+  vars:
+    f5app_services_package_url: https://github.com/F5Networks/f5-telemetry-streaming/releases/download/v{{ ts_version[:-2] }}/f5-telemetry-{{ ts_version }}.noarch.rpm
+    f5app_services_package_checksum_url: https://github.com/F5Networks/f5-telemetry-streaming/releases/download/v{{ ts_version[:-2] }}/f5-telemetry-{{ ts_version }}.noarch.rpm.sha256
+    f5app_services_package_path: /tmp/f5-telemetry-{{ ts_version }}.noarch.rpm
+# Remove until sha valiation issue is fixed
+# https://github.com/F5Networks/f5-appsvcs-templates/issues/22
+# - name: Download and Install FAST RPM sha check - url
+#   include_role:
+#     name: f5devcentral.f5app_services_package
+#   vars:
+#     f5app_services_package_url: https://github.com/F5Networks/f5-appsvcs-templates/releases/download/v{{ fast_version[:-2] }}/f5-appsvcs-templates-{{ fast_version }}.noarch.rpm
+#     f5app_services_package_checksum_url: https://github.com/F5Networks/f5-appsvcs-templates/releases/download/v{{ fast_version[:-2] }}/f5-appsvcs-templates-{{ fast_version }}.noarch.rpm.sha256
+#     f5app_services_package_path: /tmp/f5-appsvcs-templates-{{ fast_version }}.noarch.rpm
