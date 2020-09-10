@@ -32,3 +32,9 @@ ansible-galaxy install -r requirements.yml
 export BIGIP_PWD=enter_your_bigip_pwd
 ansible-playbook site.yml
 ```
+
+## Test Lab Setup
+This InSpec test will validate the lab is ready to be nominated in UDF
+```bash
+./runtests.sh
+```
