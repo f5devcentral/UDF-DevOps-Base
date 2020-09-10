@@ -1,0 +1,16 @@
+---
+# file: roles/bigips/tasks/atc_install.yml
+- name: Download and Install DO RPM sha check - url
+  include_role:
+    name: f5devcentral.f5app_services_package
+  vars:
+    f5app_services_package_url: https://github.com/F5Networks/f5-declarative-onboarding/releases/download/v{{ do_version[:-2] }}/f5-declarative-onboarding-{{ do_version }}.noarch.rpm
+    f5app_services_package_checksum_url: https://github.com/F5Networks/f5-declarative-onboarding/releases/download/v{{ do_version[:-2] }}/f5-declarative-onboarding-{{ do_version }}.noarch.rpm.sha256
+    f5app_services_package_path: /tmp/f5-declarative-onboarding-{{ do_version }}.noarch.rpm
+- name: Download and Install AS3 RPM sha check - url
+  include_role:
+    name: f5devcentral.f5app_services_package
+  vars:
+    f5app_services_package_url: https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v{{ as3_version[:-2] }}/f5-appsvcs-{{ as3_version }}.noarch.rpm
+    f5app_services_package_checksum_url: https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v{{ as3_version[:-2] }}/f5-appsvcs-{{ as3_version }}.noarch.rpm.sha256
+    f5app_services_package_path: /tmp/f5-appsvcs-extension-{{ as3_version }}.noarch.rpm

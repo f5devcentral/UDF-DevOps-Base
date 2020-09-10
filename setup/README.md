@@ -26,32 +26,9 @@ ansible_python_interpreter=/usr/bin/python3
 EOF'
 ```
 
-## Setup Ubuntu servers
+## Setup lab
 ```bash
-ansible-galaxy install mrlesmithjr.netplan 
-ansible-playbook ubuntu.yml app.yml client.yml
-
-```
-
-## Install NGINX and docker
-```bash
-ansible-playbook nginx.yml docker.yml
-```
-
-## Install Demo Apps
-```bash
-ansible-playbook nginx_demo.yml juiceshop.yml
-```
-
-## Install Client Resources
-```bash
-ansible-playbook firefox.yml f5-cli.yml coder.yml
-```
-
-## Base configuration for BIG-IP
-```bash
-ansible-galaxy install f5devcentral.f5app_services_package
-ansible-galaxy install f5devcentral.atc_deploy
+ansible-galaxy install -r requirements.yml
 export BIGIP_PWD=enter_your_bigip_pwd
-ansible-playbook bigip.yml
+ansible-playbook site.yml
 ```
