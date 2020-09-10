@@ -1,0 +1,9 @@
+network_interfaces:
+  - internal:
+    interface: ens6
+    ipv4:
+      - 10.1.10.4/24
+  - external:
+    interface: ens7
+    ipv4:
+      - 10.1.20.4/24

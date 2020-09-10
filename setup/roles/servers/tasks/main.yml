@@ -1,35 +1,6 @@
 ---
 # file: roles/servers/tasks/main.yml
 
-# Set the hostname and update /etc/hosts
-- name: Change the hostname
-  hostname: name="{{ inventory_hostname }}"
-
-- name: Adjust /etc/hosts
-  lineinfile: state=present
-    dest=/etc/hosts
-    line="{{ ansible_default_ipv4.address }} {{ inventory_hostname }} {{ ansible_hostname }}"
-    regexp="^{{ ansible_default_ipv4.address }}"
-
-# Install Aptitude
-- name: Install aptitude using apt
-  apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
-
-- name: Run the equivalent of "apt-get update" as a separate step
-  apt:
-    update_cache: yes
-
-# Update software
-- name: Upgrade all packages to the latest version
-  apt:
-    name: "*"
-    state: latest
-
-# Update dist packages
-- name: Update all packages to the latest version
-  apt:
-    upgrade: dist
-
-# Install RPM
-- name: Install rpm using apt
-  apt: name=rpm state=latest update_cache=yes force_apt_get=yes
+- include: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+- include: docker.yml

@@ -1,0 +1,13 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+---
+network:
+    version: 2
+    renderer: networkd
+    ethernets:
+        {% for i in network_interfaces %}
+        {{ i.interface }}: 
+            addresses:
+            {% for ipv4 in i.ipv4 %}
+            - {{ ipv4 }}
+            {% endfor %}
+    {% endfor %}

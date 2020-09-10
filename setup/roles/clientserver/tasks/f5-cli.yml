@@ -1,0 +1,22 @@
+---
+# file: roles/clientserver/tasks/f5-cli.yml
+- name: Pull F5 CLI
+  docker_image:
+    name: "f5devcentral/f5-cli"
+    source: pull
+  become: yes
+
+- name: Create F5 CLI
+  docker_container:
+    name: f5-cli
+    image: f5devcentral/f5-cli
+    command: /bin/bash
+    detach: yes
+    state: started
+    volumes:
+      - /home/ubuntu/.f5-cli:/root/.f5-cli
+      - /home/ubuntu:/f5-cli
+    restart_policy: always
+    interactive: yes
+    tty: yes
+  become: yes

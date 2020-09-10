@@ -1,0 +1,17 @@
+---
+# file: roles/appservers/tasks/nginxhello.yml
+- name: Pull JuiceShop
+  docker_image:
+    name: "bkimminich/juice-shop"
+    source: pull
+  become: yes
+
+- name: Create JuiceShop
+  docker_container:
+    name: juiceshop
+    image: bkimminich/juice-shop
+    state: started
+    ports:
+      - "3000:3000"
+    restart_policy: always
+  become: yes

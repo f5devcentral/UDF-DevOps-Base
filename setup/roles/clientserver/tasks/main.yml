@@ -1,0 +1,8 @@
+---
+# file: roles/clientserver/tasks/main.yml
+- include: coder.yml
+- include: f5-cli.yml
+- include: firefox.yml
+- include: inspec.yml
+- include: labguide.yml
+- include: terraform.yml

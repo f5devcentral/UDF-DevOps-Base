@@ -1,0 +1,5 @@
+---
+# file: roles/appservers/tasks/main.yml
+- include: nginx.yml
+- include: nginxhello.yml
+- include: juiceshop.yml

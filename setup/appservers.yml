@@ -2,5 +2,4 @@
 # file: appservers.yml
 - hosts: app
   roles:
-    - servers
-    # - appservers
+    - appservers
