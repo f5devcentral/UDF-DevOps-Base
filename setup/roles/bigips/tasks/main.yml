@@ -1,0 +1,4 @@
+---
+# file: roles/bigips/tasks/main.yml
+- include: atc_install.yml
+- include: atc_deploy.yml

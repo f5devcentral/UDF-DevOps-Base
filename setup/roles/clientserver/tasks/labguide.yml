@@ -1,0 +1,20 @@
+---
+# file: roles/clientserver/tasks/labguide.yml
+- name: ensure nginx is at the latest version
+  apt: name=nginx state=latest
+  become: yes
+
+- name: redirect to lab guide
+  lineinfile:
+    path: /etc/nginx/sites-enabled/default
+    firstmatch: yes
+    regexp: "try_files"
+    line: "rewrite ^/$ https://f5devcentral.github.io/UDF-DevOps-Base/ redirect;"
+  when: inventory_hostname == "client"
+  become: yes
+
+- name: start nginx
+  service:
+    name: nginx
+    state: started
+  become: yes

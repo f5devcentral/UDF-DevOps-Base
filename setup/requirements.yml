@@ -1,0 +1,5 @@
+# Install f5app_services_package
+- src: f5devcentral.f5app_services_package
+
+# Install atc_deploy
+- src: f5devcentral.atc_deploy

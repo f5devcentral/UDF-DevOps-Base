@@ -1,0 +1,6 @@
+---
+# file: roles/servers/tasks/main.yml
+
+- include: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+- include: docker.yml

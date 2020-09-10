@@ -1,0 +1,19 @@
+---
+# file: roles/bigips/vars/main.yml
+as3_version: 3.22.0-2
+do_version: 1.15.0-3
+ts_version: 1.14.0-2
+fast_version: 1.3.0-1
+f5app_services_package_server: "{{ hostvars[inventory_hostname].ansible_host }}"
+f5app_services_package_user: admin
+f5app_services_package_server_port: 443
+f5app_services_package_password: "{{ lookup('env','BIGIP_PWD') }}"
+f5app_services_package_validate_certs: false
+f5app_services_package_transport: rest
+f5app_services_package_state: "present"
+provider:
+  server: "{{ f5app_services_package_server }}"
+  user: "{{ f5app_services_package_user }}"
+  password: "{{ f5app_services_package_password }}"
+  server_port: "{{ f5app_services_package_server_port }}"
+  validate_certs: false

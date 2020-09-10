@@ -1,0 +1,6 @@
+network_interfaces:
+  - internal:
+    interface: ens6
+    ipv4:
+      - 10.1.10.5/24
+      - 10.1.10.10/24

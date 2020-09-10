@@ -1,0 +1,5 @@
+---
+# file: site.yml
+- import_playbook: appservers.yml
+- import_playbook: clientserver.yml
+- import_playbook: servers.yml

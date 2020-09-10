@@ -1,0 +1,5 @@
+---
+# file: appservers.yml
+- hosts: app
+  roles:
+    - appservers

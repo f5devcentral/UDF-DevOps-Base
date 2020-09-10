@@ -1,0 +1,40 @@
+---
+# file: roles/clientserver/tasks/coder.yml
+- name: Install Coder
+  shell: curl -fsSL https://code-server.dev/install.sh | sh
+  args:
+    warn: false
+  become: yes
+
+# Update systemctl configuration
+- name: Change bind address
+  lineinfile:
+    path: /home/ubuntu/.config/code-server/config.yaml
+    regexp: "^bind-addr:"
+    line: "bind-addr: 0.0.0.0:8080"
+  become: yes
+
+- name: Change password setting
+  lineinfile:
+    path: /home/ubuntu/.config/code-server/config.yaml
+    regexp: "^auth:"
+    line: "auth: none"
+  become: yes
+
+# Install VS Code Extensions
+- name: Download vscode-f5-fast
+  get_url:
+    url: "{{ vscode_f5_fast_url }}"
+    dest: /var/tmp/vscode-f5-fast.vsix
+    mode: "0444"
+  become: yes
+
+- name: install vscode-f5-fast extension
+  become_user: ubuntu
+  shell: code-server --install-extension /var/tmp/vscode-f5-fast.vsix
+  become: yes
+
+- name: Start the code-server
+  shell: systemctl enable --now code-server@\ubuntu
+  become: yes
+  

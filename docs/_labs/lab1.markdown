@@ -12,13 +12,13 @@ tags:
 ## Overview
 
 In this demo, we will deploy applications to the F5 BIG-IP
-using the new [F5 CLI][F5 CLI].  The purpose of this lab is to demonstrate how to leverage the F5 Automation Toolchain without the need for a complementing tool like Ansible. 
+using the new [F5 CLI][F5 CLI].  This lab demonstrates how to leverage the F5 Automation Toolchain without tools like Ansible. 
 
 ## Prerequisites
 
 1. Access to the F5 Unified Demo Framework (UDF)
 2. Chrome browser
-3. Finished the Setup Process in the [UDF DevOps Base documentation][UDF DevOps Base documentation]
+3. Finished Lab0 or the Lab0 QuickStart [UDF DevOps Base documentation](lab0.markdown)
 
 ## Environment
 
@@ -33,16 +33,20 @@ leverage the following components and tools:
 ## Setup
 
 1. Ensure you have the latest version of the code from GitHub
-
-        cd ~/projects/UDF-DevOps-Base
-        git pull
-        cd labs/lab1
+    ```bash
+    cd ~/projects/UDF-DevOps-Base
+    git remote add upstream https://github.com/f5devcentral/UDF-DevOps-Base.git
+    git fetch upstream
+    git merge upstream/main
+    cd labs/lab1
+    ```
 
 2. Set the BIG-IP password as an environment variable:
 
     > **NOTE**: Obtain the BIG-IP password on the BIG-IP1 and BIG-IP2 documentation pages inside the UDF deployment
-
-        export bigip_pwd=replaceme
+    ```bash
+    export bigip_pwd=replaceme
+    ```
 
 3. login to the BIG-IP (using the F5-CLI container)
 
@@ -60,16 +64,18 @@ leverage the following components and tools:
 
 
     execute the following command in your terminal:
-        
-        docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
+    ```bash
+    docker exec -it f5-cli f5 login --authentication-provider bigip --host 10.1.1.6 --user admin --password $bigip_pwd
+    ```
     
     You should see a message stating _"Logged in successfully"_
 
 4. Verify the Application Service 3 Extension is installed
 
     This command also leverages the Docker exec feature, but we are now telling the F5 CLI to target a BIG-IP, obtain the version of AS3 installed and that AS3 is ready:
-
-        docker exec -it f5-cli f5 bigip extension as3 verify
+    ```bash
+    docker exec -it f5-cli f5 bigip extension as3 verify
+    ```
 
     We are looking for version 3.19.1 or higher in the response.
 
@@ -85,8 +91,9 @@ leverage the following components and tools:
 6. Issue AS3 Declaration
 
     The final step is to send the _http.as3.json_ AS3 declaration to the BIG-IP.  Again, this command leverages the Docker exec feature, but we are now telling the F5 CLI to create an AS3 application on the BIG-IP and to use the declaration located at _/f5-cli/projects/UDF-DevOps-Base/labs/lab1/http.as3.json_.  For more information, please reference the [F5-CLI documentation](https://clouddocs.f5.com/sdk/f5-cli/).
-
-        docker exec -it f5-cli f5 bigip extension as3 create --declaration /f5-cli/projects/UDF-DevOps-Base/labs/lab1/http.as3.json
+    ```bash
+    docker exec -it f5-cli f5 bigip extension as3 create --declaration /f5-cli/projects/UDF-DevOps-Base/labs/lab1/http.as3.json
+    ```
 
     You should receive a result code of 200.
 
@@ -96,10 +103,11 @@ An important, but often overlooked, part of automation is the creation of test c
 
 ### Test that the deployment was successful
 
-  In this test, InSpec will check that the application at http://10.1.20.10 is accessible and contains the phrase "Hello World".
-
-    cd ~/projects/UDF-DevOps-Base/labs/lab1
-    inspec exec test/app
+In this test, InSpec will check that the application at http://10.1.20.10 is accessible and contains the phrase "Hello World".
+```bash
+cd ~/projects/UDF-DevOps-Base/labs/lab1
+inspec exec test/app
+```
 
 ### Visual validation
 While InSpec has proven that the application is working some of you
@@ -118,12 +126,11 @@ You should now see the NGINX demo application.
 To cleanup the lab, we need to remove the AS3 declaration deployed to the BIG-IP.  
 
 This command leverages the Docker exec feature and tells the F5 CLI to target a BIG-IP then delete all AS3 declarations:
-
-    docker exec -it f5-cli f5 bigip extension as3 delete --auto-approve
-
+```bash
+docker exec -it f5-cli f5 bigip extension as3 delete --auto-approve
+```
 
 [F5 CLI]: https://clouddocs.f5.com/sdk/f5-cli/
-[UDF DevOps Base documentation]: https://udf-devops-base.readthedocs.io/en/latest/
 [F5 BIG-IP]: https://www.f5.com/products/big-ip-services/virtual-editions
 [F5 Automation Toolchain]: https://www.f5.com/products/automation-and-orchestration
 [InSpec]: https://www.inspec.io/

@@ -88,7 +88,7 @@ done
     ```bash
     git remote add upstream https://github.com/f5devcentral/UDF-DevOps-Base.git
     git fetch upstream
-    git merge upstream/master
+    git merge upstream/main
     ```
 
 ## Install BIG-IP ATC and FAST extension

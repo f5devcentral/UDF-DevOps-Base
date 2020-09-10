@@ -1,0 +1,18 @@
+---
+# file: roles/appservers/tasks/nginxhello.yml
+# install the NGINX hello demo docker container
+- name: Pull NGINX Demo
+  docker_image:
+    name: "nginxdemos/hello"
+    source: pull
+  become: yes
+
+- name: Create NGINX Demo
+  docker_container:
+    name: nginx_hello
+    image: nginxdemos/hello
+    state: started
+    ports:
+      - "8080:80"
+    restart_policy: always
+  become: yes

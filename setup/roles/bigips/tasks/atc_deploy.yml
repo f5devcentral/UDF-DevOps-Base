@@ -1,0 +1,11 @@
+---
+# file: roles/bigips/tasks/atc_deploy.yml
+
+- name: Onboard BIG-IP with base DO
+  include_role:
+    name: f5devcentral.atc_deploy
+  vars:
+    atc_method: POST
+    atc_declaration_file: "base.do.json"
+    atc_delay: 10
+    atc_retries: 5

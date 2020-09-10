@@ -11,7 +11,7 @@
             <div id="lab_banner">
                 <h1>{{ page.title }}</h1>
                 <small>{{ page.edit_date }} - lab time: {{ page.lab_time }} -</small>
-                <a href="{{ site.github.repository_url }}/blob/master/docs/{{ page.relative_path }}">
+                <a href="{{ site.github.repository_url }}/blob/main/docs/{{ page.relative_path }}">
                     {% for contributor in site.github.contributors %}
                     <img src="{{ contributor.avatar_url }}&size=24" height="24" width="24" />
                     {% endfor %}
@@ -23,7 +23,7 @@
                 {% include toc.html html=content ordered=true h_min=2 h_max=2 %}
 
                 <br />
-                <a href="{{ site.github.repository_url }}/blob/master/docs/{{ page.relative_path }}">Edit on GitHub</a>
+                <a href="{{ site.github.repository_url }}/blob/main/docs/{{ page.relative_path }}">Edit on GitHub</a>
             </div>
             <div id="content">
                 {{ content }}

@@ -1,0 +1,19 @@
+---
+# file: roles/clientserver/tasks/firefox.yml
+- name: Pull Firefox
+  docker_image:
+    name: "jlesage/firefox"
+    source: pull
+  become: yes
+
+- name: Create Firefox
+  docker_container:
+    name: firefox
+    image: jlesage/firefox
+    state: started
+    shm_size: 1G
+    ports:
+      - "5800:5800"
+    privileged: yes
+    restart_policy: always
+  become: yes

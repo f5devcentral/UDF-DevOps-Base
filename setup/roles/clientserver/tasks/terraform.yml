@@ -1,0 +1,29 @@
+---
+# file: roles/clientserver/tasks/main.yml
+
+- name: ensure unzip is at the latest version
+  apt: name=unzip state=latest
+  become: yes
+
+- name: get checksum
+  uri:
+    url: https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_SHA256SUMS
+    return_content: yes
+  register: terraform_checksums
+  become: yes
+
+- name: download Terraform
+  get_url:
+    url: https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip
+    dest: "/tmp/terraform_{{ terraform_version }}_linux_amd64.zip"
+    checksum: "sha256:{{ item.split(' ') | first }}"
+  with_items: "{{ terraform_checksums.content.split('\n') | select('search', 'linux_amd64') | list | first }}"
+  register: terraform_downloaded
+  become: yes
+
+- name: install Terraform
+  unarchive:
+    src: /tmp/terraform_{{ terraform_version }}_linux_amd64.zip
+    dest: /usr/local/bin
+    copy: no
+  become: yes
