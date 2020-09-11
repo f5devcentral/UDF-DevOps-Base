@@ -1,0 +1,12 @@
+---
+# file: roles/clientserver/tasks/fast.yml
+- name: Ensure NPM is installed
+  apt: 
+    name: npm 
+    state: latest 
+  become: yes
+- name: Install "F5 Application Service Templates SDK package globally.
+  npm:
+    name: f5devcentral/f5-fast-core
+    global: yes
+  become: yes

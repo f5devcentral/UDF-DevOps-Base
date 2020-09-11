@@ -52,7 +52,15 @@ end
 control "Jinja2 Ready" do
   impact 1.0
   title "Jinja3 Ready"
-  describe command('jinja -version') do
-    its('stdout') { should match /v0.12.29/ }
+  describe command('which jinja2') do
+    its('stdout') { should match "/usr/local/bin/jinja2" }
+  end
+end
+
+control "FAST Ready" do
+  impact 1.0
+  title "FAST Ready"
+  describe command('which fast') do
+    its('stdout') { should match "/usr/local/bin/fast" }
   end
 end

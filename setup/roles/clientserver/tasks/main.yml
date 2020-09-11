@@ -2,6 +2,7 @@
 # file: roles/clientserver/tasks/main.yml
 - include: coder.yml
 - include: f5-cli.yml
+- include: fast.yml
 - include: firefox.yml
 - include: inspec.yml
 - include: jinja2.yml
