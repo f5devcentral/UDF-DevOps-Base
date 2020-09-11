@@ -4,5 +4,6 @@
 - include: f5-cli.yml
 - include: firefox.yml
 - include: inspec.yml
+- include: jinja2.yml
 - include: labguide.yml
 - include: terraform.yml

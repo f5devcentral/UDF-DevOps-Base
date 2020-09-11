@@ -48,3 +48,11 @@ control "F5 CLI Ready" do
     its('command') { should eq '/bin/bash' }
   end
 end
+
+control "Jinja2 Ready" do
+  impact 1.0
+  title "Jinja3 Ready"
+  describe command('jinja -version') do
+    its('stdout') { should match /v0.12.29/ }
+  end
+end
