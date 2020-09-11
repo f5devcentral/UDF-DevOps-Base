@@ -1,0 +1,7 @@
+---
+# file: roles/clientserver/tasks/jinja2.yml
+
+# install the Jinja2 CLI
+- pip:
+    name: jinja2-cli
+  become: yes
