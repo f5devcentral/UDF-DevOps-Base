@@ -12,11 +12,29 @@ tags:
 ## Quickstart 
 Use the steps below to bypass Lab 0. Otherwise, skip to the Setup section.
 1. SSH into the client instance (you can do this via the Access drop down in the UDF portal)
-2. Set the BIG-IP password:
+2. Fork the UDF-Devops-Base repository
+
+    The labs for this UDF blueprint can be found on [GitHub](https://github.com/f5devcentral/UDF-DevOps-Base).  You will need to fork this repository into your own GitHub environmnent. 
+    
+    For information on how to do this, please visit the [GitHub documentation page](https://help.github.com/en/github/getting-started-with-github/fork-a-repo#fork-an-example-repository).
+
+3. Checkout Forked Repository
+
+    To conduct the labs, you will need to check our your forked version of the repository:
+
+    ```bash
+    cd ~/projects
+
+    # replace your GitHub username
+    git clone https://github.com/<githubusername>/UDF-DevOps-Base.git
+
+    cd UDF-DevOps-Base/labs/lab0
+    ```
+4. Set the BIG-IP password:
 ```bash
 export bigip_pwd=replaceme
 ```
-3. Onboard the two BIG-IP virtual appliances:
+5. Onboard the two BIG-IP virtual appliances:
 ```bash
 COUNTER=1
 for i in {6..7}
