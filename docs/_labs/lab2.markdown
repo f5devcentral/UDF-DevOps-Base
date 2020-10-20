@@ -211,7 +211,18 @@ So far, we have created two HTTP applications using Jinaj2 and AS3.  However, if
 
 2. Examine the two template files:
     * _lab2d-tenant.as3.j2_ - creates the Tenant class
+        * We now use the ```include``` statement to chain templates:
+
+            ```jinja
+            {% include "lab2d-http.as3.j2" %}
+            ```
+
     * _lab2d-http.as3.j2_ - creates the HTTP classes
+        * We now look for the app.type in the for loop:
+
+            ```jinja
+            {% for app in apps if app.type == "http" -%}
+            ```
 
 3. Create the AS3 declaration using Jinja2
 
@@ -223,19 +234,6 @@ So far, we have created two HTTP applications using Jinaj2 and AS3.  However, if
     * You should see multiple applications under the demo tenant
         * test1.f5demos.com should listen on port 80
         * test2.f5demos.com should listen on port 8080
-    * We now use the ```include``` statement to chain templates:
-
-        ```jinja
-        {% include "lab2d-http.as3.j2" %}
-        ```
-
-    * We now look for the app.type in the for loop:
-
-        ```jinja
-        {% for app in apps if app.type == "http" -%}
-        ```
-
-
 
 ## Issue AS3 Declaration to BIG-IP
 
