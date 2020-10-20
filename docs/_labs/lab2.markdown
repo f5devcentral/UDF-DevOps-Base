@@ -3,7 +3,7 @@ name: Lab2
 title: Lab2 - Jinja2 Templates
 description: Demonstrates the ability of Jinja2 to create dynamic AS3 declarations.  While this lab uses the F5-CLI, the same logic applies when using Jinaj2 with Ansible. 
 layout: lab
-edit_date: 05/21/2020
+edit_date: 09/10/2020
 lab_time: 20 mins
 tags: 
     - f5-cli
@@ -27,7 +27,7 @@ Ideally, you will start your automation path by offering a few common deployment
 
 1. Access to the F5 Unified Demo Framework (UDF)
 2. Chrome browser
-3. Finished the Lab0 setup process in the [UDF DevOps Base documentation][UDF DevOps Base documentation]
+3. Finished Lab0 or the Lab0 QuickStart [UDF DevOps Base documentation](lab0.markdown)
 
 ## Environment
 
@@ -42,10 +42,13 @@ leverage the following components and tools:
 
 ## Setup
 Ensure you have the latest version of the lab from GitHub then open the lab2 folder:
-
-    cd ~/projects/UDF-DevOps-Base
-    git pull
-    cd labs/lab2
+```bash
+cd ~/projects/UDF-DevOps-Base
+git remote add upstream https://github.com/f5devcentral/UDF-DevOps-Base.git
+git fetch upstream
+git merge upstream/main
+cd labs/lab2
+```
 
 ## Create AS3 Declaration
 
@@ -95,20 +98,32 @@ To make our Jinja2 template a little more useful, we are going to introduce [Jin
         - 10.1.10.10
     ```
 
-2. Create the AS3 declaration using Jinja2
+2. Open the lab2b.as3.j2 template file and examine it.
+    
+    * It should look familiar to your first jina template from lab2a.as3.j2 
+    * Notice the virtualAddresses jinja value looks different
+
+        ```jinja
+        "{{ virtualAddresses|join('", "') }}"
+        ```
+        
+    * The pipe symbol (```|```)  after the variable tells Jinja to run the [join](https://jinja.palletsprojects.com/en/2.11.x/templates/#join) filter
+    * What is desired outcome of the join filter in this example?
+
+3. Create the AS3 declaration using Jinja2
 
     ```bash
     jinja2 lab2b.as3.j2 lab2b.yml > lab2b.as3.json
     ```
 
-3. Open the AS3 declaration and examine it:
+4. Open the AS3 declaration and examine it:
 
     * virtualAddresses now supports the correct data type based on the AS3 schema
     * serverAddresses now supports the correct data type based on the AS3 schema
-    * You can now dynamically added and removed by modifying the data file
+    * You can now dynamically added and removed pool members by modifying the data file
 
 ## Multiple Applications
-Now we will extend the Jinja2 template to support multiple applications under the demo tenant.
+Now we will extend the Jinja2 template to support multiple applications under the demo tenant using a [for loop](https://jinja.palletsprojects.com/en/2.11.x/templates/#for).
 
 1. Create a new yaml data file called _lab2c.yml_:
 
@@ -133,14 +148,31 @@ Now we will extend the Jinja2 template to support multiple applications under th
         - "10.1.20.10"
         virtualPort: 8080
     ```
+2. Open the lab2c.as3.j2 template file and examine it.
+    
+    * Notice the for loop under the Tenant class
 
-2. Create the AS3 declaration using Jinja2
+        ```jinja
+        {% for app in apps -%}
+        ```
+
+        * This loops through the apps in our data file
+    * Notice how the for loop is closed
+
+        ```jinja
+        {{ "," if not loop.last }}
+        {% endfor -%}
+        ```
+        * this adds a comma if the element is not the last to ensure we produce a valid JSON file
+        * the ```-%``` tells Jina to not add a new line  
+
+3. Create the AS3 declaration using Jinja2
 
     ```bash
     jinja2 lab2c.as3.j2 lab2c.yml > lab2c.as3.json
     ```
 
-3. Open the AS3 declaration and examine it:
+4. Open the AS3 declaration and examine it:
 
     * You should see multiple applications under the demo tenant
         * test1.f5demos.com should listen on port 80
@@ -179,7 +211,18 @@ So far, we have created two HTTP applications using Jinaj2 and AS3.  However, if
 
 2. Examine the two template files:
     * _lab2d-tenant.as3.j2_ - creates the Tenant class
+        * We now use the ```include``` statement to chain templates:
+
+            ```jinja
+            {% include "lab2d-http.as3.j2" %}
+            ```
+
     * _lab2d-http.as3.j2_ - creates the HTTP classes
+        * We now look for the app.type in the for loop:
+
+            ```jinja
+            {% for app in apps if app.type == "http" -%}
+            ```
 
 3. Create the AS3 declaration using Jinja2
 
@@ -245,8 +288,6 @@ docker exec -it f5-cli f5 bigip extension as3 delete --auto-approve
 ```
 
 
-[F5 CLI]: https://clouddocs.f5.com/sdk/f5-cli/
-[UDF DevOps Base documentation]: https://udf-devops-base.readthedocs.io/en/latest/
 [F5 BIG-IP]: https://www.f5.com/products/big-ip-services/virtual-editions
 [F5 Automation Toolchain]: https://www.f5.com/products/automation-and-orchestration
 [InSpec]: https://www.inspec.io/
