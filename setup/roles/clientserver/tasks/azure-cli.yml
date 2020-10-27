@@ -1,0 +1,8 @@
+---
+# file: roles/clientserver/tasks/azure-cli.yml
+
+- name: install azure cli
+  shell: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+  args:
+    warn: false
+  become: yes

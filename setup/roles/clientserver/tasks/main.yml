@@ -1,5 +1,7 @@
 ---
 # file: roles/clientserver/tasks/main.yml
+- include: aws-cli.yml
+- include: azure-cli.yml
 - include: coder.yml
 - include: f5-cli.yml
 - include: fast.yml

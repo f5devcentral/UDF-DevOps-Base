@@ -1,0 +1,20 @@
+---
+# file: roles/clientserver/tasks/aws-cli.yml
+
+- name: download aws cli
+  get_url:
+    url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    dest: /tmp/awscli-exe-linux-x86_64.zip
+  register: aws_cli_downloaded
+
+- name: unarchive aws cli
+  unarchive:
+    src: "{{aws_cli_downloaded.dest}}"
+    dest: /tmp
+  register: aws_cli_unarchive
+
+- name: install aws cli
+  shell: "{{aws_cli_unarchive.dest}}/aws/install"
+  args:
+    warn: false
+  become: yes
