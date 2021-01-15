@@ -14,7 +14,7 @@
   register: aws_cli_unarchive
 
 - name: install aws cli
-  shell: "{{aws_cli_unarchive.dest}}/aws/install"
+  shell: "{{aws_cli_unarchive.dest}}/aws/install --update"
   args:
     warn: false
   become: yes
